@@ -21,6 +21,69 @@ public class Participante {
     private String ra;
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
-    @OneToMany(mappedBy = "participantes")
+    @OneToMany(mappedBy = "participante")
+
     private List<Certificado> certificados = new ArrayList<>();
+    @ManyToMany(mappedBy = "evento")
+    private List<Evento> eventos = new ArrayList<>();
+
+    public long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getRa() {
+        return ra;
+    }
+
+    public void setRa(String ra) {
+        this.ra = ra;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public List<Certificado> getCertificados() {
+        return certificados;
+    }
+
+    public void setCertificados(List<Certificado> certificados) {
+        this.certificados = certificados;
+    }
+
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
+    }
 }
