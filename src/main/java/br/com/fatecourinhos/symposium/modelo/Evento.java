@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "evento")
+@Table(name = "eventos")
 public class Evento {
 
     @Id
@@ -25,7 +25,6 @@ public class Evento {
     private LocalDate dataIni;
     @Column(name = "data_final", nullable = false)
     private LocalDate dataFim;
-    @OneToMany
-    @JoinColumn(name = "id_participantes_fk", referencedColumnName = "id", nullable = false)
+    @ManyToMany(mappedBy = "evento")
     private List<Participante> vagasPreenchidas = new ArrayList<>();
 }
