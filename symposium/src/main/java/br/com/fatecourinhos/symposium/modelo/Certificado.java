@@ -1,5 +1,7 @@
 package br.com.fatecourinhos.symposium.modelo;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -7,11 +9,13 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "certificados")
+@Getter
+@Setter
 public class Certificado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
 
     @ManyToOne
