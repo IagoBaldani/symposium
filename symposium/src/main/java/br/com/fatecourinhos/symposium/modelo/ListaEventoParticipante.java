@@ -3,16 +3,19 @@ package br.com.fatecourinhos.symposium.modelo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lista_eventos_participantes")
+@Table(name = "lista_de_eventos_em_participantes")
 public class ListaEventoParticipante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "fk_participante", nullable = false)
+    @Column(name = "fk_participantes")
+    @JoinColumn(name = "fk_participantes", referencedColumnName = "id", nullable = false)
     private Long participanteFk;
-    @Column(name = "fk_eventos", nullable = false)
+    @Column(name = "fk_eventos")
+    @JoinColumn(name = "fk_eventos", referencedColumnName = "id", nullable = false)
     private Long eventoFk;
+    @Column(name = "situacao")
     private String situacao;
 
     public Long getId() {

@@ -3,6 +3,7 @@ package br.com.fatecourinhos.symposium.controller;
 import br.com.fatecourinhos.symposium.modelo.Organizador;
 import br.com.fatecourinhos.symposium.repository.OrganizadorRepository;
 import br.com.fatecourinhos.symposium.vo.dto.OrganizadorDto;
+import br.com.fatecourinhos.symposium.vo.form.AttOrganizadorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

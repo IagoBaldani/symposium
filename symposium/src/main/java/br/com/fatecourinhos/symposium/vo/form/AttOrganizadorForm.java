@@ -1,4 +1,4 @@
-package br.com.fatecourinhos.symposium.controller;
+package br.com.fatecourinhos.symposium.vo.form;
 
 import br.com.fatecourinhos.symposium.modelo.Organizador;
 import br.com.fatecourinhos.symposium.repository.OrganizadorRepository;

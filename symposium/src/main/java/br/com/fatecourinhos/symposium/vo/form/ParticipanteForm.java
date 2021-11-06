@@ -1,13 +1,13 @@
 package br.com.fatecourinhos.symposium.vo.form;
 
 import br.com.fatecourinhos.symposium.modelo.Participante;
-import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
 
-public class AttParticipantePorOrganizadorForm {
+public class ParticipanteForm {
 
     private String nome;
-    private String email;
     private String cpf;
+    private String email;
+    private String ra;
     private String tipo;
 
     public String getNome() {
@@ -18,6 +18,14 @@ public class AttParticipantePorOrganizadorForm {
         this.nome = nome;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -26,12 +34,12 @@ public class AttParticipantePorOrganizadorForm {
         this.email = email;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getRa() {
+        return ra;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setRa(String ra) {
+        this.ra = ra;
     }
 
     public String getTipo() {
@@ -42,12 +50,13 @@ public class AttParticipantePorOrganizadorForm {
         this.tipo = tipo;
     }
 
-    public Participante atualizar(Long id, ParticipanteRepository repository){
-        Participante participante = repository.getById(id);
-        participante.setNome(this.nome);
-        participante.setEmail(this.email);
-        participante.setCpf(this.cpf);
+    public Participante converte (){
+        Participante participante = new Participante();
         participante.setTipo(this.tipo);
+        participante.setEmail(this.email);
+        participante.setNome(this.nome);
+        participante.setCpf(this.cpf);
+        participante.setRa(this.ra);
         return participante;
     }
 }
