@@ -1,7 +1,5 @@
 package br.com.fatecourinhos.symposium.modelo;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,8 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "eventos")
-@Getter
-@Setter
 public class Evento {
 
     @Id
@@ -23,14 +19,73 @@ public class Evento {
     @Column(name = "descricao", nullable = false, length = 1000)
     private String descricao;
     @Column(name = "vagas_totais", nullable = false)
-    private long vagasTotais;
+    private Long vagasTotais;
     @Column(name = "custo", nullable = false)
     private BigDecimal custo;
     @Column(name = "data_inicio", nullable = false)
     private LocalDate dataIni;
     @Column(name = "data_final", nullable = false)
     private LocalDate dataFim;
-    @ManyToMany
-    @JoinColumn(name = "vagas_preenchidas", referencedColumnName = "id", nullable = false)
-    private List<Participante> vagasPreenchidas = new ArrayList<>();
+    @ManyToMany(mappedBy = "lista_eventos_participantes")
+    private List<Participante> listaDeParticipantes = new ArrayList<>();
+    @Column(name = "numero_vagas_preenchidas")
+    private Long numeroVagasPreechidas;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNomeEvento() {
+        return nomeEvento;
+    }
+
+    public void setNomeEvento(String nomeEvento) {
+        this.nomeEvento = nomeEvento;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Long getVagasTotais() {
+        return vagasTotais;
+    }
+
+    public void setVagasTotais(Long vagasTotais) {
+        this.vagasTotais = vagasTotais;
+    }
+
+    public BigDecimal getCusto() {
+        return custo;
+    }
+
+    public void setCusto(BigDecimal custo) {
+        this.custo = custo;
+    }
+
+    public LocalDate getDataIni() {
+        return dataIni;
+    }
+
+    public void setDataIni(LocalDate dataIni) {
+        this.dataIni = dataIni;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
 }

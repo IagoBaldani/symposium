@@ -1,33 +1,44 @@
 package br.com.fatecourinhos.symposium.modelo;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "certificados")
-@Getter
-@Setter
 public class Certificado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Participante participante;
+    @ManyToOne
+    private Evento evento;
 
-    @Column(nullable = false)
-    private String nome;
-    @Column(nullable = false)
-    private String cpf;
-    @Column(name = "hora_conclusao", nullable = false)
-    private LocalDate horaConclusao;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Participante getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
 
 }
