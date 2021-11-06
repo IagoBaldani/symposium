@@ -22,10 +22,6 @@ public class Participante {
     private String ra;
     @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
-    @OneToMany(mappedBy = "certificados")
-    private List<Certificado> certificados = new ArrayList<>();
-    @ManyToMany(mappedBy = "lista_eventos_participantes")
-    private List<Evento> listaDeEventos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -75,19 +71,4 @@ public class Participante {
         this.cpf = cpf;
     }
 
-    public List<Certificado> getCertificados() {
-        return certificados;
-    }
-
-    public void setCertificados(List<Certificado> certificados) {
-        this.certificados = certificados;
-    }
-
-    public List<Evento> getEventos() {
-        return listaDeEventos;
-    }
-
-    public void setEventos(List<Evento> eventos) {
-        this.listaDeEventos = eventos;
-    }
 }

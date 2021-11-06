@@ -5,7 +5,6 @@ import br.com.fatecourinhos.symposium.repository.EventoRepository;
 import br.com.fatecourinhos.symposium.vo.dto.EventoDto;
 import br.com.fatecourinhos.symposium.vo.form.AtualizaEventoForm;
 import br.com.fatecourinhos.symposium.vo.form.EventoForm;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +38,7 @@ public class EventoController {
         Evento evento = form.converte();
         repository.save(evento);
 
-        URI uri = uriBuilder.path("/api/evento/atualiza/{id}").buildAndExpand(evento.getId()).toUri();
+        URI uri = uriBuilder.path("/api/evento/{id}").buildAndExpand(evento.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new EventoDto(evento));
     }
