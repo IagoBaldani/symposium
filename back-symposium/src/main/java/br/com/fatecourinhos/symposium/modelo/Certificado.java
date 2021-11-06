@@ -11,10 +11,12 @@ public class Certificado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Participante participante;
-    @ManyToOne
-    private Evento evento;
+    @Column(name = "fk_participante")
+    @JoinColumn(name = "fk_participante", referencedColumnName = "id", nullable = false)
+    private Long participanteFk;
+    @Column(name = "fk_eventos")
+    @JoinColumn(name = "fk_eventos", referencedColumnName = "id", nullable = false)
+    private Long eventosFk;
 
 
     public Long getId() {
@@ -25,20 +27,20 @@ public class Certificado {
         this.id = id;
     }
 
-    public Participante getParticipante() {
-        return participante;
+
+    public Long getParticipanteFk() {
+        return participanteFk;
     }
 
-    public void setParticipante(Participante participante) {
-        this.participante = participante;
+    public void setParticipanteFk(Long participanteFk) {
+        this.participanteFk = participanteFk;
     }
 
-    public Evento getEvento() {
-        return evento;
+    public Long getEventosFk() {
+        return eventosFk;
     }
 
-    public void setEvento(Evento evento) {
-        this.evento = evento;
+    public void setEventosFk(Long eventosFk) {
+        this.eventosFk = eventosFk;
     }
-
 }

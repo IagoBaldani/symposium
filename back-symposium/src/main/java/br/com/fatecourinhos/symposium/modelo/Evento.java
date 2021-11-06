@@ -20,16 +20,14 @@ public class Evento {
     private String descricao;
     @Column(name = "vagas_totais", nullable = false)
     private Long vagasTotais;
-    @Column(name = "custo", nullable = false)
+    @Column(name = "custo_inscricao", nullable = false)
     private BigDecimal custo;
     @Column(name = "data_inicio", nullable = false)
     private LocalDate dataIni;
     @Column(name = "data_final", nullable = false)
     private LocalDate dataFim;
-    @ManyToMany(mappedBy = "lista_eventos_participantes")
-    private List<Participante> listaDeParticipantes = new ArrayList<>();
     @Column(name = "numero_vagas_preenchidas")
-    private Long numeroVagasPreechidas;
+    private Long numeroVagasPreechidas = 0L;
 
 
     public Long getId() {
@@ -88,4 +86,19 @@ public class Evento {
         this.dataFim = dataFim;
     }
 
+    public Long getNumeroVagasPreechidas() {
+        return numeroVagasPreechidas;
+    }
+
+    public void setNumeroVagasPreechidas(Long numeroVagasPreechidas) {
+        this.numeroVagasPreechidas = numeroVagasPreechidas;
+    }
+
+    public void adicionaParticipante(){
+        this.numeroVagasPreechidas++;
+    }
+
+    public void retiraParticipante(){
+        this.numeroVagasPreechidas--;
+    }
 }
