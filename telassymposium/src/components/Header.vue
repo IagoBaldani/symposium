@@ -21,6 +21,9 @@ export default{
 </script>
 
 <style >
+body{
+  background-color: #EFEFEF;
+}
 header{
     background: linear-gradient(rgb(93,251,109), rgb(36,174,233));
 }

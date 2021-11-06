@@ -1,0 +1,4 @@
+cadastroEdicaoDeEvento - OK
+edicaoParticipantePorOrganizador - OK
+edicaoParticipante - OK
+edicaoOrganizador -OK
