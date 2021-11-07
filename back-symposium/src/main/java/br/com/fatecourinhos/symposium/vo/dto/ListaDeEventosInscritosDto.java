@@ -13,10 +13,19 @@ public class ListaDeEventosInscritosDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long idParticipante;
     private String nomeEvento;
     private String situacao;
     private String descricao;
     private LocalDate dataInicio;
+
+    public Long getIdParticipante() {
+        return idParticipante;
+    }
+
+    public void setIdParticipante(Long idParticipante) {
+        this.idParticipante = idParticipante;
+    }
 
     public Long getId() {
         return id;

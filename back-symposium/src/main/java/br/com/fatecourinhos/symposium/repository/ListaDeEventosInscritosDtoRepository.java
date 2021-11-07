@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface ListaDeEventosInscritosDtoRepository extends JpaRepository<ListaDeEventosInscritosDto, Long> {
 
-    @Query(value = "SELECT e.data_inicio, e.descricao, e.nome_evento, l.situacao " +
+    @Query(value = "SELECT l.id, p.id AS id_participante, e.data_inicio, e.descricao, e.nome_evento, l.situacao " +
             "FROM lista_de_eventos_em_participantes AS l INNER JOIN eventos AS e ON l.fk_eventos = e.id " +
-            "INNER JOIN participantes p on l.fk_participantes = p.id WHERE p.id = 3", nativeQuery = true)
-    public List<ListaDeEventosInscritosDto> findByListaDeEventosInscritosPorParticipante(@Param("id") Long id);
+            "INNER JOIN participantes p on l.fk_participantes = p.id WHERE p.id = :parametro", nativeQuery = true)
+    public List<ListaDeEventosInscritosDto> findByListaDeEventosInscritosPorParticipante(@Param("parametro") Long id);
 }
