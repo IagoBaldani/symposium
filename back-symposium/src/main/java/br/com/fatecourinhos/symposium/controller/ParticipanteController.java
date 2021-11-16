@@ -66,6 +66,6 @@ public class ParticipanteController {
     @GetMapping("/lista-eventos-inscritos/{id}")
     public List<ListaDeEventosInscritosDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
 
-        return listaDeEventosInscritosDtoRepository.findByListaDeEventosInscritosPorParticipante();
+        return listaDeEventosInscritosDtoRepository.findByListaDeEventosInscritosPorParticipante(id);
     }
 }
