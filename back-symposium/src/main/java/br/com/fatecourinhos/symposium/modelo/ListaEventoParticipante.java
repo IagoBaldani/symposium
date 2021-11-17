@@ -3,18 +3,18 @@ package br.com.fatecourinhos.symposium.modelo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lista_de_eventos_em_participantes")
+@Table(name = "lista_de_inscritos_em_eventos")
 public class ListaEventoParticipante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "fk_participantes")
+    @ManyToOne
     @JoinColumn(name = "fk_participantes", referencedColumnName = "id", nullable = false)
-    private Long participanteFk;
-    @Column(name = "fk_eventos")
+    private Participante participante;
+    @ManyToOne
     @JoinColumn(name = "fk_eventos", referencedColumnName = "id", nullable = false)
-    private Long eventoFk;
+    private Evento evento;
     @Column(name = "situacao")
     private String situacao;
 
@@ -26,20 +26,20 @@ public class ListaEventoParticipante {
         this.id = id;
     }
 
-    public Long getParticipanteFk() {
-        return participanteFk;
+    public Participante getParticipante() {
+        return participante;
     }
 
-    public void setParticipanteFk(Long participanteFk) {
-        this.participanteFk = participanteFk;
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
     }
 
-    public Long getEventoFk() {
-        return eventoFk;
+    public Evento getEvento() {
+        return evento;
     }
 
-    public void setEventoFk(Long eventoFk) {
-        this.eventoFk = eventoFk;
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 
     public String getSituacao() {

@@ -15,6 +15,16 @@ public class AtualizaEventoForm {
     private BigDecimal custo;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
+    private Long cargaHoraria;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getNomeEvento() {
         return nomeEvento;
@@ -64,6 +74,14 @@ public class AtualizaEventoForm {
         this.dataFinal = dataFinal;
     }
 
+    public Long getCargaHoraria() {
+        return cargaHoraria;
+    }
+
+    public void setCargaHoraria(Long cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
+    }
+
     public Evento atualizaEvento(Long id, EventoRepository repository) {
 
         Evento evento = repository.getById(id);
@@ -73,6 +91,8 @@ public class AtualizaEventoForm {
         evento.setVagasTotais(this.vagasTotais);
         evento.setDataIni(this.dataInicio);
         evento.setDataFim(this.dataFinal);
+        evento.setCargaHoraria(this.cargaHoraria);
+        evento.setStatus(this.status);
 
         return evento;
     }
