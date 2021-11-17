@@ -7,11 +7,11 @@ public class OrganizadorDto {
     private String nome;
     private String cpf;
     private String email;
-    private String curso;
+    private String tipo;
 
     public OrganizadorDto(Organizador organizador){
         organizador.setCpf(this.cpf);
-        organizador.setCurso(this.curso);
+        organizador.setTipo(this.tipo);
         organizador.setNome(this.nome);
         organizador.setEmail(this.email);
     }
@@ -19,7 +19,6 @@ public class OrganizadorDto {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -27,7 +26,6 @@ public class OrganizadorDto {
     public String getCpf() {
         return cpf;
     }
-
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
@@ -35,16 +33,14 @@ public class OrganizadorDto {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getCurso() {
-        return curso;
+    public String getTipo() {
+        return tipo;
     }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }
