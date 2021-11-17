@@ -12,37 +12,39 @@ public class Participante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "email", nullable = false, length = 100)
-    private String email;
-    @Column(name = "nome", nullable = false, length = 60)
+
+    @OneToOne
+    private Usuario usuario;
+
+    @Column(nullable = false, length = 60)
     private String nome;
-    @Column(name = "tipo", nullable = false)
+
+    @Column(nullable = false)
     private String tipo;
-    @Column(name = "ra", nullable = false, length = 13)
+
+    @Column(nullable = false, length = 13)
     private String ra;
-    @Column(name = "cpf", nullable = false, length = 11)
+
+    @Column(nullable = false, length = 11)
     private String cpf;
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
 
     public String getEmail() {
-        return email;
+        return this.usuario.getEmail();
     }
-
     public void setEmail(String email) {
-        this.email = email;
+        this.usuario.setEmail(email);
     }
 
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -50,7 +52,6 @@ public class Participante {
     public String getTipo() {
         return tipo;
     }
-
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
@@ -58,7 +59,6 @@ public class Participante {
     public String getRa() {
         return ra;
     }
-
     public void setRa(String ra) {
         this.ra = ra;
     }
@@ -66,7 +66,6 @@ public class Participante {
     public String getCpf() {
         return cpf;
     }
-
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }

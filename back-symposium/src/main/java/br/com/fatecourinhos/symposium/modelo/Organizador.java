@@ -12,19 +12,21 @@ public class Organizador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome_organizador", nullable = false, length = 60)
+    @OneToOne
+    private Usuario usuario;
+
+    @Column(nullable = false, length = 60)
     private String nome;
-    @Column(name = "email_organizador", nullable = false, length = 100)
-    private String email;
-    @Column(name = "curso_organizador", nullable = false, length = 100)
-    private String curso;
-    @Column(name = "cpf_organizador", nullable = false, length = 11)
+
+    @Column(nullable = false, length = 100)
+    private String tipo;
+
+    @Column(nullable = false, length = 11)
     private String cpf;
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -32,31 +34,27 @@ public class Organizador {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
 
     public String getEmail() {
-        return email;
+        return this.usuario.getEmail();
     }
-
     public void setEmail(String email) {
-        this.email = email;
+        this.usuario.setEmail(email);
     }
 
-    public String getCurso() {
-        return curso;
+    public String getTipo() {
+        return tipo;
     }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getCpf() {
         return cpf;
     }
-
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
