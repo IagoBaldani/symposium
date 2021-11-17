@@ -1,9 +1,10 @@
 package br.com.fatecourinhos.symposium.controller;
 
+import br.com.fatecourinhos.symposium.modelo.ListaEventoParticipante;
 import br.com.fatecourinhos.symposium.modelo.Participante;
-import br.com.fatecourinhos.symposium.repository.ListaDeEventosInscritosDtoRepository;
+import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
-import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosDto;
+import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosPorParticipantesDto;
 import br.com.fatecourinhos.symposium.vo.dto.ParticipanteDto;
 import br.com.fatecourinhos.symposium.vo.form.AttParticipanteForm;
 import br.com.fatecourinhos.symposium.vo.form.ParticipanteForm;
@@ -26,7 +27,7 @@ public class ParticipanteController {
     ParticipanteRepository repository;
 
     @Autowired
-    ListaDeEventosInscritosDtoRepository listaDeEventosInscritosDtoRepository;
+    ListaEventoParticipanteRepository listaEventoParticipanteRepository;
 
     @GetMapping("/{id}")
     public ParticipanteDto buscaParticipantePorOrganizador (@PathVariable Long id){
@@ -63,9 +64,11 @@ public class ParticipanteController {
         return ResponseEntity.created(uri).body(new ParticipanteDto(participante));
     }
 
-    @GetMapping("/lista-eventos-inscritos/{id}")
-    public List<ListaDeEventosInscritosDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
+    @GetMapping("/lista-de-eventos-inscritos/{id}")
+    public List<ListaDeEventosInscritosPorParticipantesDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
 
-        return listaDeEventosInscritosDtoRepository.findByListaDeEventosInscritosPorParticipante(id);
+        List<ListaEventoParticipante> listaDeEventosPorParticipante = listaEventoParticipanteRepository.findTodosOsEventosInscritos(id);
+
+        return ListaDeEventosInscritosPorParticipantesDto.toList(listaDeEventosPorParticipante);
     }
 }

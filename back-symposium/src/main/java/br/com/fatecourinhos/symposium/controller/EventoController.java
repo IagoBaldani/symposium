@@ -5,6 +5,7 @@ import br.com.fatecourinhos.symposium.repository.EventoRepository;
 import br.com.fatecourinhos.symposium.vo.dto.EventoDto;
 import br.com.fatecourinhos.symposium.vo.form.AtualizaEventoForm;
 import br.com.fatecourinhos.symposium.vo.form.EventoForm;
+import br.com.fatecourinhos.symposium.vo.form.ListaEventosDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +23,7 @@ public class EventoController {
     @Autowired
     EventoRepository repository;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public EventoDto retornaEventoEspecifico(@PathVariable Long id){
         Optional<Evento> optional = repository.findById(id);
 
@@ -30,6 +32,13 @@ public class EventoController {
             return new EventoDto(evento);
         }
         return null;
+    }
+
+    @GetMapping("/lista-de-eventos")
+    public List<ListaEventosDto> listaEventos (){
+        List<Evento> listaDeEventos = repository.findTodosPorStatus();
+
+        return ListaEventosDto.toList(listaDeEventos);
     }
 
     @PostMapping

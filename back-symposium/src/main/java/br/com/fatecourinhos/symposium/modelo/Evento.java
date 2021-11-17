@@ -28,6 +28,9 @@ public class Evento {
     private LocalDate dataFim;
     @Column(name = "numero_vagas_preenchidas")
     private Long numeroVagasPreechidas = 0L;
+    @Column(name = "carga_horaria")
+    private Long cargaHoraria;
+    private String status;
 
 
     public Long getId() {
@@ -92,6 +95,22 @@ public class Evento {
 
     public void setNumeroVagasPreechidas(Long numeroVagasPreechidas) {
         this.numeroVagasPreechidas = numeroVagasPreechidas;
+    }
+
+    public Long getCargaHoraria() {
+        return cargaHoraria;
+    }
+
+    public void setCargaHoraria(Long cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void adicionaParticipante(){
