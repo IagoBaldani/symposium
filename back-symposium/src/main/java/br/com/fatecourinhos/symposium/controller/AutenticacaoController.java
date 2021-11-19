@@ -39,7 +39,7 @@ public class AutenticacaoController {
     @PostMapping
     // Esse método recebe as requisições e autentica os dados presentes no Body
     // Caso os dados (Email e Senha) coincidem com os presentes no BD, o método retorna
-    // o Token para utilização da API.
+    // o Token para utilização da API, o tipo do usuário e o tipo do Token.
     public ResponseEntity autenticar(@RequestBody @Valid AutenticacaoForm form){
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 

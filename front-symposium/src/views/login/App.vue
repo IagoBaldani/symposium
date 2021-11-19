@@ -6,13 +6,13 @@
     </div>
     <div class="principal">
       <h2 class="fw-bold"> LOGIN </h2>
-      <form :action="'/home-' + this.tipo">
+      <form @submit.stop.prevent="submit">
         <div class="form-floating">
-          <input type="email" class="form-control mt-2 me-2 ms-2" placeholder="nome@exemplo.com.br">
+          <input v-model="email" type="email" class="form-control mt-2 me-2 ms-2" placeholder="nome@exemplo.com.br">
           <label>Email</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control mt-3 me-2 ms-2" placeholder="nome@exemplo.com.br">
+          <input v-model="senha" type="password" class="form-control mt-3 me-2 ms-2" placeholder="nome@exemplo.com.br">
           <label>Senha</label>
         </div>
         <input type="submit" class="form-control botao mt-5 me-2 ms-2" value="ENTRAR">
@@ -29,19 +29,47 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
+import axios from "axios";
+
+let config = {
+  headers: {
+    ContentType: 'application/json'
+  }
+}
 
 export default {
-    name: 'App',
-    components:{},
-
-    data(){
-      return{
-        tipo: 'organizador'
-      }
-    },
-    methods:{
-
+  name: 'App',
+  data(){
+    return{
+      email:'',
+      senha: '',
+      tipoUsuario: ''
     }
+  },
+  methods:{
+    submit () {
+      axios.post('http://localhost:8081/auth/', {
+        email: this.email,
+        senha: this.senha
+      })
+      .then(response => {
+        Cookie.set('login_token', response.data.token)
+        Cookie.set('user_type', response.data.tipoUsuario)
+        this.tipoUsuario = response.data.tipoUsuario
+        this.tipoUsuario = this.tipoUsuario.toLowerCase()
+
+        window.location.href = `http://localhost:8080/home-${this.tipoUsuario}`
+      })
+      .catch(erro => {
+        alert('Dados incorretos. Por favor, tente novamente.')
+      })
+    }
+  },
+  created () {
+    Cookie.remove('login_token')
+    Cookie.remove('user_type')
+  }
 }
 </script>
 

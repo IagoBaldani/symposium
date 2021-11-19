@@ -36,6 +36,16 @@
               </div>
             </div>
           </a>
+          <a href="/visualizacao-organizador">
+            <div class="botao d-flex mt-4 verde-claro">
+              <div class="imagem-botao d-flex verde-claro-gradient">
+                <img src="../../assets/imgs/account_box_white_24dp.svg">
+              </div>
+              <div class="titulo-botao d-flex">
+                <h4 class="fw-bold"> Meus <br> dados</h4>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
