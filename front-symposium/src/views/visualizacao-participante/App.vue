@@ -28,7 +28,7 @@
             <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
           </div>
           <div class="mt-5">
-            <button class="btn btn-confirmar">EDITAR DADOS</button>
+            <a href="/edicao-participante"> <div class="btn-confirmar mb-3"> EDITAR DADOS </div> </a>
           </div>
         </div>
         <div class="col-lg-7"></div>
@@ -40,15 +40,21 @@
 
 <script>
 import Header from '../../components/Header.vue'
+import Funcoes from "@/services/Funcoes";
 
 export default {
     name: 'App',
     components:{
         Header
     },
-
     data(){
+      return{
 
+      }
+    },
+    beforeMount() {
+      const dadosUrl = Funcoes.pegaDadosUrl();
+      Funcoes.verificaToken()
     },
     methods:{
 
@@ -60,19 +66,26 @@ export default {
 input{
   background-color: #E7E5E5;
 }
+
 .titulo{
   font-size: 2rem;
   font-weight: bold;
 }
+
 .btn-confirmar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  padding: 5px;
   background: linear-gradient(rgb(93,251,109), rgb(36,174,233));
-  border: none;
-  width: 100%;
-  color: #fff !important;
-  height: 45px !important;
-  margin-bottom: 30px;
   font-weight: bold;
+  color: #FFFFFF !important;
+  transition: all 200ms linear;
+  border: none;
+  cursor: pointer;
 }
+
 .btn-confirmar:hover{
   box-shadow: 0px 0px 10px #7C7C7C;
 }

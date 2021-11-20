@@ -4,7 +4,7 @@
             <div class="row justify-content-evenly">
                 <div class="col-1"></div>
                 <div class="col-10 text-center">
-                    <a href="#"> <img src="../assets/imgs/Simposium.svg" class="logo"> </a>
+                    <a :href="'/home-' + this.tipoUsuario"> <img src="../assets/imgs/Simposium.svg" class="logo"> </a>
                 </div>
                 <div class="col-1 d-flex justify-content-center">
                   <a v-if="page === 'home'" href="/login">
@@ -20,10 +20,17 @@
 </template>
 
 <script>
+import Cookie from "js-cookie";
+
 export default {
   name: 'Header',
   props: {
     page: String
+  },
+  data(){
+    return{
+      tipoUsuario: Cookie.get('user_type').toLowerCase()
+    }
   }
 }
 </script>

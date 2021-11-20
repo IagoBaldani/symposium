@@ -107,6 +107,12 @@ module.exports= {
             template: 'public/index.html',
             title: 'Visualizar participante',
             chunks: ['chunk-vendors', 'chunk-common', 'visualizacao-participante']
+        },
+        'acesso-negado': {
+          entry: './src/views/acesso-negado/main.js',
+          template: 'public/index.html',
+          title: 'Acesso negado',
+          chunks: ['chunk-vendors', 'chunk-common', 'acesso-negado']
         }
     }
 }

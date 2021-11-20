@@ -16,8 +16,8 @@
               <input class="form-control" type="email" value="exemplo@email.com" >
             </div>
             <div class="mt-3">
-              <label class="form-label mb-0">Curso</label>
-              <input class="form-control" type="text" value="Curso superior" >
+              <label class="form-label mb-0">Tipo</label>
+              <input class="form-control" type="text" value="Secretaria" >
             </div>
             <div class="mt-3">
               <label class="form-label mb-0">CPF</label>
@@ -36,15 +36,22 @@
 
 <script>
 import Header from '../../components/Header.vue'
+import Funcoes from "@/services/Funcoes";
 
 export default {
     name: 'App',
     components:{
         Header
     },
-
     data(){
+      return{
 
+      }
+    },
+    beforeMount() {
+      const dadosUrl = Funcoes.pegaDadosUrl();
+      Funcoes.verificaToken()
+      Funcoes.verificaTipoUsuario()
     },
     methods:{
 

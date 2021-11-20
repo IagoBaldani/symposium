@@ -17,6 +17,13 @@ export default {
     }
   },
 
+  async verificaTipoUsuario (){
+    if(Cookie.get('user_type') == 'PARTICIPANTE'){
+      console.log("USUÁRIO NÃO AUTORIZADO")
+      window.location.href = `http://localhost:8080/acesso-negado`
+    }
+  },
+
   pegaDadosUrl () {
     var query = location.search.slice(1)
     var partes = query.split('&')
@@ -32,3 +39,10 @@ export default {
     return data
   }
 }
+
+export const http = axios.create({
+  baseURL: 'http://localhost:8081/api/',
+  headers: {
+    Authorization: `Bearer ${Cookie.get('login_token')}`
+  }
+})
