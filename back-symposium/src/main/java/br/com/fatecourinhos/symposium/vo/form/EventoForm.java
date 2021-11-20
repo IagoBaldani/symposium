@@ -13,6 +13,8 @@ public class EventoForm {
     private BigDecimal custo;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
+    private Long cargaHoraria;
+    private String status;
 
     public Evento converte(){
         Evento evento = new Evento();
@@ -22,6 +24,8 @@ public class EventoForm {
         evento.setVagasTotais(this.vagasTotais);
         evento.setDataFim(this.dataFinal);
         evento.setDataIni(this.dataInicio);
+        evento.setCargaHoraria(this.cargaHoraria);
+        evento.setStatus("EM_ANDAMENTO");
         return evento;
     }
 
@@ -71,5 +75,13 @@ public class EventoForm {
 
     public void setDataFinal(LocalDate dataFinal) {
         this.dataFinal = dataFinal;
+    }
+
+    public Long getCargaHoraria() {
+        return cargaHoraria;
+    }
+
+    public void setCargaHoraria(Long cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 }
