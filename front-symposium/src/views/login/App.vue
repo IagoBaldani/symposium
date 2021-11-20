@@ -56,19 +56,21 @@ export default {
       .then(response => {
         Cookie.set('login_token', response.data.token)
         Cookie.set('user_type', response.data.tipoUsuario)
+        Cookie.set('user_id', response.data.emailUsuario)
         this.tipoUsuario = response.data.tipoUsuario
         this.tipoUsuario = this.tipoUsuario.toLowerCase()
 
         window.location.href = `http://localhost:8080/home-${this.tipoUsuario}`
       })
       .catch(erro => {
-        alert('Dados incorretos. Por favor, tente novamente.')
+        alert('Dados incorretos. Por favor, tente novamente')
       })
     }
   },
   created () {
     Cookie.remove('login_token')
     Cookie.remove('user_type')
+    Cookie.remove('user_id')
   }
 }
 </script>

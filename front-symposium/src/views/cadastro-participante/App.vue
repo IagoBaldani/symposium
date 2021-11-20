@@ -47,11 +47,10 @@
 
 export default {
     name: 'App',
-    components:{
-    },
-
     data(){
+      return{
 
+      }
     },
     methods:{
 
@@ -62,7 +61,7 @@ export default {
 <style>
 .container-custom{
     height: 100%;
-    width: 100% !important;;
+    width: 100% !important;
     background: linear-gradient(rgb(93,251,109), rgb(36,174,233));
     display: flex;
     justify-content: center;

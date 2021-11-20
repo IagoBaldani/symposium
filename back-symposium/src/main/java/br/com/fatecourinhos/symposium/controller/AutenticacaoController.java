@@ -22,6 +22,7 @@ import java.util.List;
 // Essa classe é o controller que recebe requisições para o retorno do Token JWT
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AutenticacaoController {
 
     @Autowired
@@ -50,7 +51,7 @@ public class AutenticacaoController {
 
             String token = tokenService.gerarToken(authentication);
 
-            return ResponseEntity.ok(new TokenDto(token, "Bearer", perfil.getNome()));
+            return ResponseEntity.ok(new TokenDto(token, "Bearer", perfil.getNome(), form.getEmail()));
         }
         catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body(e);
