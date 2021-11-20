@@ -5,6 +5,7 @@ import br.com.fatecourinhos.symposium.config.TokenService;
 import br.com.fatecourinhos.symposium.modelo.Perfil;
 import br.com.fatecourinhos.symposium.modelo.Usuario;
 import br.com.fatecourinhos.symposium.repository.PerfilRepository;
+import br.com.fatecourinhos.symposium.repository.UsuarioRepository;
 import br.com.fatecourinhos.symposium.vo.dto.TokenDto;
 import br.com.fatecourinhos.symposium.vo.form.AutenticacaoForm;
 import br.com.fatecourinhos.symposium.vo.form.UsuarioForm;
@@ -17,7 +18,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.rmi.AlreadyBoundException;
 import java.util.List;
+import java.util.Optional;
 
 // Essa classe é o controller que recebe requisições para o retorno do Token JWT
 @RestController
@@ -36,6 +39,9 @@ public class AutenticacaoController {
 
     @Autowired
     private PerfilRepository perfilRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @PostMapping
     // Esse método recebe as requisições e autentica os dados presentes no Body
@@ -70,12 +76,23 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/cadastro-usuario")
+    @CrossOrigin
     public ResponseEntity cadastroUsuario(@RequestBody UsuarioForm form){
         Usuario usuario = form.converter(perfilRepository);
+        //Pega o email enviado pelo form
+        String emailForm = form.getEmail();
+
+        // Se já houver um usuário com o email do form, o objeto abaixo não será nulo e a aplicação jogará uma exception
+        Optional<Usuario> usuarioDoEmail = usuarioRepository.findById(emailForm);
 
         try{
-            authService.salvaUsuario(usuario);
-            return ResponseEntity.ok().build();
+            if(usuarioDoEmail.isPresent()){
+                throw new AlreadyBoundException();
+            }
+            else {
+                authService.salvaUsuario(usuario);
+                return ResponseEntity.ok().build();
+            }
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e);
