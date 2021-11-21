@@ -54,20 +54,23 @@
 <script>
 import Header from '../../components/Header.vue'
 import Funcoes from "@/services/Funcoes";
+import {http} from "@/services/Funcoes";
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
     components:{
         Header
     },
-
     data(){
       return{
-        tipoPagina: ''
+        tipoPagina: '',
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
+      Funcoes.verificaToken()
+      Funcoes.verificaTipoUsuario()
 
       this.tipoPagina = dadosUrl.tipo;
     },

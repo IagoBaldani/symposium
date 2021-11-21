@@ -39,15 +39,22 @@
 
 <script>
 import Header from '../../components/Header.vue'
+import Funcoes from "@/services/Funcoes";
 
 export default {
     name: 'App',
     components:{
         Header
     },
-
     data(){
+      return{
 
+      }
+    },
+    beforeMount() {
+      const dadosUrl = Funcoes.pegaDadosUrl();
+      Funcoes.verificaToken()
+      Funcoes.verificaTipoUsuario()
     },
     methods:{
 

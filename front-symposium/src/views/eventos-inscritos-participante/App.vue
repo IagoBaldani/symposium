@@ -113,17 +113,21 @@
 
 <script>
 import Header from '../../components/Header.vue'
+import Funcoes from "@/services/Funcoes";
 
 export default {
     name: 'App',
     components:{
         Header
     },
-
     data(){
       return{
         tipo: 'pagamentoPendente'
       }
+    },
+    beforeMount() {
+      const dadosUrl = Funcoes.pegaDadosUrl();
+      Funcoes.verificaToken()
     },
     methods:{
 

@@ -2,8 +2,10 @@ package br.com.fatecourinhos.symposium.controller;
 
 import br.com.fatecourinhos.symposium.modelo.ListaEventoParticipante;
 import br.com.fatecourinhos.symposium.modelo.Participante;
+import br.com.fatecourinhos.symposium.modelo.Usuario;
 import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
+import br.com.fatecourinhos.symposium.repository.UsuarioRepository;
 import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosPorParticipantesDto;
 import br.com.fatecourinhos.symposium.vo.dto.ListaDeParticipantesDto;
 import br.com.fatecourinhos.symposium.vo.dto.ParticipanteDto;
@@ -17,11 +19,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
+import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/participante")
+@CrossOrigin
 public class ParticipanteController {
 
     @Autowired
@@ -62,14 +66,26 @@ public class ParticipanteController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ParticipanteDto> novoParticipante(ParticipanteForm form, UriComponentsBuilder UriBuilder){
-
+    public ResponseEntity novoParticipante(ParticipanteForm form){
         Participante participante = form.converte();
-        repository.save(participante);
 
-        URI uri = UriBuilder.path("/api/participante/{id}").buildAndExpand(participante.getId()).toUri();
+        //Pega o email enviado pelo form
+        String participanteEmail = form.getEmail();
 
-        return ResponseEntity.created(uri).body(new ParticipanteDto(participante));
+        // Se já houver um participante com o email do form, o objeto abaixo não será nulo e a aplicação jogará uma exception
+        Optional<Participante> ParticipanteDoEmail = repository.findByUsuario(participanteEmail);
+        try{
+            if(ParticipanteDoEmail.isPresent()){
+               throw new AlreadyBoundException();
+            }
+            else{
+                repository.save(participante);
+                return ResponseEntity.ok().body(new ParticipanteDto(participante));
+            }
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body(e);
+        }
     }
 
     @GetMapping("/lista-de-eventos-inscritos/{id}")
