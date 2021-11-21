@@ -5,6 +5,7 @@ import br.com.fatecourinhos.symposium.modelo.Participante;
 import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
 import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosPorParticipantesDto;
+import br.com.fatecourinhos.symposium.vo.dto.ListaDeParticipantesDto;
 import br.com.fatecourinhos.symposium.vo.dto.ParticipanteDto;
 import br.com.fatecourinhos.symposium.vo.form.AttParticipanteForm;
 import br.com.fatecourinhos.symposium.vo.form.ParticipanteForm;
@@ -29,8 +30,15 @@ public class ParticipanteController {
     @Autowired
     ListaEventoParticipanteRepository listaEventoParticipanteRepository;
 
+    @GetMapping
+    public List<ListaDeParticipantesDto> listaParticipantes (){
+        List<Participante> lista = repository.findAll();
+
+        return ListaDeParticipantesDto.toList(lista);
+    }
+
     @GetMapping("/{id}")
-    public ParticipanteDto buscaParticipantePorOrganizador (@PathVariable Long id){
+    public ParticipanteDto buscaParticipante (@PathVariable Long id){
 
         Optional<Participante> optional = repository.findById(id);
 

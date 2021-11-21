@@ -16,16 +16,16 @@ public class Participante {
     @OneToOne
     private Usuario usuario;
 
-    @Column(nullable = false, length = 60)
+    @Column(name = "nome" ,nullable = false, length = 60)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(name = "tipo",nullable = false)
     private String tipo;
 
-    @Column(nullable = false, length = 13)
+    @Column(name = "ra",nullable = false, length = 13)
     private String ra;
 
-    @Column(nullable = false, length = 11)
+    @Column(name = "cpf",nullable = false, length = 11)
     private String cpf;
 
     public Long getId() {
