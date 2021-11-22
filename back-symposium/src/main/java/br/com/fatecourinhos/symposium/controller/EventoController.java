@@ -35,7 +35,7 @@ public class EventoController {
     }
 
     @GetMapping("/lista-de-eventos")
-    public List<ListaEventosDto> listaEventos (){
+    public List<ListaEventosDto> listaEventosParaParticipante (){
         List<Evento> listaDeEventos = repository.findTodosPorStatus();
 
         return ListaEventosDto.toList(listaDeEventos);

@@ -15,13 +15,13 @@ public class Organizador {
     @OneToOne
     private Usuario usuario;
 
-    @Column(nullable = false, length = 60)
+    @Column(name = "nome",nullable = false, length = 60)
     private String nome;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "tipo",nullable = false, length = 100)
     private String tipo;
 
-    @Column(nullable = false, length = 11)
+    @Column(name = "cpf",nullable = false, length = 11)
     private String cpf;
 
     public Long getId() {
