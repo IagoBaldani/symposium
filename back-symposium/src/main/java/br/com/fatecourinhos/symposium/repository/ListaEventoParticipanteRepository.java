@@ -17,4 +17,10 @@ public interface ListaEventoParticipanteRepository extends JpaRepository<ListaEv
    @Query(value = "SELECT lista.fk_participantes, lista.fk_eventos, lista.situacao, lista.id FROM lista_de_inscritos_em_eventos AS lista " +
            "INNER JOIN eventos AS e ON lista.fk_eventos = e.id WHERE lista.fk_participantes = :id AND e.data_final < :data")
    ListaEventoParticipante findPorIdUsuarioESituacao(@Param("idParticipante")Long id, @Param("data")LocalDate data);
+
+   @Query(value = "SELECT * FROM lista_de_inscritos_em_eventos AS lista " +
+           "INNER JOIN participantes AS p ON lista.fk_participantes = p.id " +
+           "INNER JOIN eventos as e ON lista.fk_eventos = e.id " +
+           "WHERE p.id = :idPart AND e.status = 'FINALIZADO'")
+   List<ListaEventoParticipante> findPorIdParticipanteEDataMaisProxima(@Param("idPart") Long id);
 }
