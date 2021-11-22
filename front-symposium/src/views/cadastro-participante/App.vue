@@ -83,7 +83,7 @@ export default {
           alert("Erro: " + this.errorCounter.msgErro)
         }
       },
-      postParticipante(){
+      async postParticipante(){
         axios.post('http://localhost:8081/api/participante/', this.participante)
           .then(response =>{
             console.log("POST PARTICIPANTE FOI")
@@ -93,7 +93,7 @@ export default {
             this.errorCounter.msgErro = erro
           })
       },
-      postUsuario(){
+      async postUsuario(){
         axios.post('http://localhost:8081/auth/cadastro-usuario', this.participante)
           .then(response =>{
             console.log("POST USUARIO FOI")

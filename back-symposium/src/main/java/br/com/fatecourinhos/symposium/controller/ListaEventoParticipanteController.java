@@ -28,5 +28,7 @@ public class ListaEventoParticipanteController {
     }
 
     @PostMapping
-    public InscricaoGeradaDto geraInscricaoNoEvento (@RequestBody)
+    public InscricaoGeradaDto geraInscricaoNoEvento (@RequestBody){
+
+    }
 }

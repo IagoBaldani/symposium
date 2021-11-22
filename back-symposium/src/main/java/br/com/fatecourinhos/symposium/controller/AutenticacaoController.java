@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 // Essa classe é o controller que recebe requisições para o retorno do Token JWT
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
 public class AutenticacaoController {
 
     @Autowired
@@ -76,7 +76,6 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/cadastro-usuario")
-    @CrossOrigin
     public ResponseEntity cadastroUsuario(@RequestBody UsuarioForm form){
         Usuario usuario = form.converter(perfilRepository);
         //Pega o email enviado pelo form

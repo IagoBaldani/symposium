@@ -9,19 +9,19 @@
           <span class="titulo">Dados do organizador</span>
           <div class="mt-5">
             <label class="form-label mb-0">Nome</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" :value="organizador.nome" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Email</label>
-            <input class="form-control" type="email" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="email" :value="organizador.email" disabled>
           </div>
           <div class="mt-3">
-            <label class="form-label mb-0">Curso</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <label class="form-label mb-0">Tipo</label>
+            <input class="form-control" type="text" :value="organizador.tipo" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">CPF</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" :value="organizador.cpf" disabled>
           </div>
           <div class="mt-5">
             <button class="btn btn-confirmar">EDITAR DADOS</button>
@@ -37,6 +37,8 @@
 <script>
 import Header from '../../components/Header.vue'
 import Funcoes from "@/services/Funcoes";
+import {http} from "@/services/Funcoes";
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -45,15 +47,27 @@ export default {
     },
     data(){
       return{
-
+        organizador:{},
+        email: Cookie.get('user_id')
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
       Funcoes.verificaToken()
       Funcoes.verificaTipoUsuario()
+
+      this.getOrganizador();
     },
     methods:{
+      getOrganizador () {
+        http.get(`/api/organizador/${this.email}`)
+        .then(response =>{
+          this.organizador = response.data
+        })
+        .catch(erro =>{
+          alert(erro)
+        })
+      }
     }
 }
 </script>

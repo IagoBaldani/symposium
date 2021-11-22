@@ -3,7 +3,6 @@ package br.com.fatecourinhos.symposium.controller;
 import br.com.fatecourinhos.symposium.modelo.ListaEventoParticipante;
 import br.com.fatecourinhos.symposium.modelo.Participante;
 import br.com.fatecourinhos.symposium.modelo.Usuario;
-import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.UsuarioRepository;
 import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosPorParticipantesDto;
@@ -16,23 +15,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.rmi.AlreadyBoundException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/participante")
-@CrossOrigin
 public class ParticipanteController {
 
     @Autowired
     ParticipanteRepository repository;
 
-    @Autowired
-    ListaEventoParticipanteRepository listaEventoParticipanteRepository;
+//    @Autowired
+//    ListaEventoParticipanteRepository listaEventoParticipanteRepository;
 
     @GetMapping
     public List<ListaDeParticipantesDto> listaParticipantes (){
@@ -41,10 +39,10 @@ public class ParticipanteController {
         return ListaDeParticipantesDto.toList(lista);
     }
 
-    @GetMapping("/{id}")
-    public ParticipanteDto buscaParticipante (@PathVariable Long id){
+    @GetMapping("/{email}")
+    public ParticipanteDto buscaParticipante (@PathVariable String email){
 
-        Optional<Participante> optional = repository.findById(id);
+        Optional<Participante> optional = repository.findByUsuario(email);
 
         if(optional.isPresent()){
             Participante participante = optional.get();
@@ -88,11 +86,11 @@ public class ParticipanteController {
         }
     }
 
-    @GetMapping("/lista-de-eventos-inscritos/{id}")
-    public List<ListaDeEventosInscritosPorParticipantesDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
-
-        List<ListaEventoParticipante> listaDeEventosPorParticipante = listaEventoParticipanteRepository.findTodosOsEventosInscritos(id);
-
-        return ListaDeEventosInscritosPorParticipantesDto.toList(listaDeEventosPorParticipante);
-    }
+//    @GetMapping("/lista-de-eventos-inscritos/{id}")
+//    public List<ListaDeEventosInscritosPorParticipantesDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
+//
+//        List<ListaEventoParticipante> listaDeEventosPorParticipante = listaEventoParticipanteRepository.findTodosOsEventosInscritos(id);
+//
+//        return ListaDeEventosInscritosPorParticipantesDto.toList(listaDeEventosPorParticipante);
+//    }
 }

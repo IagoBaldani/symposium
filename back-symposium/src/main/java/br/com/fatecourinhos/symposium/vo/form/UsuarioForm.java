@@ -33,7 +33,7 @@ public class UsuarioForm {
     }
 
     public Usuario converter(PerfilRepository perfilRepository){
-        Optional<Perfil> optPerfil = perfilRepository.findByNome(this.tipoUsuario);
+        Optional<Perfil> optPerfil = perfilRepository.findByNome("PARTICIPANTE");
 
         return new Usuario(email, senha, optPerfil.get());
     }
