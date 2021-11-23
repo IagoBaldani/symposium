@@ -37,7 +37,6 @@ public class LoginController {
 
         if(optional.isPresent()){
             Usuario usuario = optional.get();
-
             if(Objects.equals(usuario.getTipo(), "ORGANIZADOR")){
                 Organizador organizador = organizadorRepository.findPorEmailDeUsuario(usuario.getEmail());
                 return ResponseEntity.ok().body(new GeraCookieDto(organizador.getId(), "ORGANIZADOR"));
@@ -45,7 +44,6 @@ public class LoginController {
                 Participante participante = participanteRepository.findPorEmailDeUsuario(usuario.getEmail());
                 return ResponseEntity.ok().body(new GeraCookieDto(participante.getId(), "PARTICIPANTE"));
             }
-
         }
         else {
             return ResponseEntity.badRequest().build();

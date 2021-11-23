@@ -1,5 +1,7 @@
 package br.com.fatecourinhos.symposium.vo.form;
 
+import br.com.fatecourinhos.symposium.modelo.Usuario;
+
 public class UsuarioForm {
     private String email;
     private String senha;
@@ -26,4 +28,11 @@ public class UsuarioForm {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public Usuario converte(String tipo){
+        Usuario usuario = new Usuario();
+        usuario.setEmail(this.email);
+        usuario.setSenha(this.senha);
+        usuario.setTipo(tipo);
+        return usuario;
+    }
 }

@@ -41,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import {http} from "@/services/Funcoes";
 
 export default {
     name: 'App',
@@ -70,38 +71,34 @@ export default {
         this.participante.ra = this.modelRa
         this.participante.cpf = this.modelCpf
       },
-      submit(){
+      async submit(){
         this.pegaDados()
 
-        this.postParticipante()
-        this.postUsuario()
+        await http.post('/usuario/', this.participante)
+          .then(response =>{
+            console.log("POST USUARIO FOI")
+            this.errorCounter.estagioErro++
+          })
+          .catch(erro =>{
+            this.errorCounter.msgErro = erro
+          })
 
-        if(this.errorCounter.estagioErro == 0){
-          console.log("DEU CERTO")
+        await http.post('/participante/', this.participante)
+          .then(response =>{
+            console.log("POST PARTICIPANTE FOI")
+            this.errorCounter.estagioErro++
+          })
+          .catch(erro =>{
+            this.errorCounter.msgErro = erro
+          })
+
+        if(this.errorCounter.estagioErro == 2){
+          alert("Participante cadastrado com sucesso!")
+          window.location.href = "http://localhost:8080/login"
         }
         else {
           alert("Erro: " + this.errorCounter.msgErro)
         }
-      },
-      postParticipante(){
-        axios.post('http://localhost:8081/api/participante/', this.participante)
-          .then(response =>{
-            console.log("POST PARTICIPANTE FOI")
-          })
-          .catch(erro =>{
-            this.errorCounter.estagioErro = 1
-            this.errorCounter.msgErro = erro
-          })
-      },
-      postUsuario(){
-        axios.post('http://localhost:8081/auth/cadastro-usuario', this.participante)
-          .then(response =>{
-            console.log("POST USUARIO FOI")
-          })
-          .catch(erro =>{
-            this.errorCounter.estagioErro = 2
-            this.errorCounter.msgErro = erro
-          })
       }
     }
 }

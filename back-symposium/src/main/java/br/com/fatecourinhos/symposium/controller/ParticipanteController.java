@@ -29,14 +29,17 @@ import java.util.Optional;
 public class ParticipanteController {
 
     @Autowired
-    ParticipanteRepository repository;
+    ParticipanteRepository participanteRepository;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @Autowired
     ListaEventoParticipanteRepository listaEventoParticipanteRepository;
 
     @GetMapping
     public List<ListaDeParticipantesDto> listaParticipantes (){
-        List<Participante> lista = repository.findAll();
+        List<Participante> lista = participanteRepository.findAll();
 
         return ListaDeParticipantesDto.toList(lista);
     }
@@ -44,7 +47,7 @@ public class ParticipanteController {
     @GetMapping("/{id}")
     public ParticipanteDto buscaParticipante (@PathVariable Long id){
 
-        Optional<Participante> optional = repository.findById(id);
+        Optional<Participante> optional = participanteRepository.findById(id);
 
         if(optional.isPresent()){
             Participante participante = optional.get();
@@ -59,29 +62,17 @@ public class ParticipanteController {
     @Transactional
     public ResponseEntity<ParticipanteDto> editaParticipante(@PathVariable Long id, AttParticipanteForm form){
 
-        Participante participante = form.atualizar(id, repository);
+        Participante participante = form.atualizar(id, participanteRepository);
 
         return ResponseEntity.ok().body(new ParticipanteDto(participante));
     }
 
     @PostMapping
-    @Transactional
-    public ResponseEntity novoParticipante(ParticipanteForm form){
-        Participante participante = form.converte();
-
-        //Pega o email enviado pelo form
-        String participanteEmail = form.getEmail();
-
-        // Se já houver um participante com o email do form, o objeto abaixo não será nulo e a aplicação jogará uma exception
-        Optional<Participante> ParticipanteDoEmail = repository.findByUsuario(participanteEmail);
+    public ResponseEntity novoParticipante(@RequestBody ParticipanteForm form){
         try{
-            if(ParticipanteDoEmail.isPresent()){
-               throw new AlreadyBoundException();
-            }
-            else{
-                repository.save(participante);
-                return ResponseEntity.ok().body(new ParticipanteDto(participante));
-            }
+            Participante participante = form.converte(usuarioRepository);
+            participanteRepository.save(participante);
+            return ResponseEntity.ok().body("Participante cadastrado com sucesso!");
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e);
