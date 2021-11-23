@@ -1,11 +1,6 @@
 package br.com.fatecourinhos.symposium.vo.form;
 
 import br.com.fatecourinhos.symposium.modelo.Participante;
-import br.com.fatecourinhos.symposium.modelo.Perfil;
-import br.com.fatecourinhos.symposium.modelo.Usuario;
-import br.com.fatecourinhos.symposium.repository.PerfilRepository;
-
-import java.util.Optional;
 
 public class ParticipanteForm {
 

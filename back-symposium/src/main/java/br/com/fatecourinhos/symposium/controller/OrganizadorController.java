@@ -6,26 +6,30 @@ import br.com.fatecourinhos.symposium.vo.dto.OrganizadorDto;
 import br.com.fatecourinhos.symposium.vo.form.AttOrganizadorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api/organizador")
+@CrossOrigin
 public class OrganizadorController {
 
     @Autowired
     OrganizadorRepository repository;
 
+    @GetMapping("/{id}")
+    public OrganizadorDto mostraOrganizador (@PathVariable Long id){
+        return new OrganizadorDto(repository.getById(id));
+    }
+
+
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<OrganizadorDto> editaOrganizador(@PathVariable Long id, AttOrganizadorForm form){
+    public ResponseEntity editaOrganizador(@PathVariable Long id,@RequestBody AttOrganizadorForm form){
 
         Organizador organizador = form.atualiza(id, repository);
 
-        return ResponseEntity.ok().body(new OrganizadorDto(organizador));
+        return ResponseEntity.ok().build();
     }
 }

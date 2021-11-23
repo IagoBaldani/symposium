@@ -38,13 +38,6 @@ public class Organizador {
         this.nome = nome;
     }
 
-    public String getEmail() {
-        return this.usuario.getEmail();
-    }
-    public void setEmail(String email) {
-        this.usuario.setEmail(email);
-    }
-
     public String getTipo() {
         return tipo;
     }
@@ -57,5 +50,13 @@ public class Organizador {
     }
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

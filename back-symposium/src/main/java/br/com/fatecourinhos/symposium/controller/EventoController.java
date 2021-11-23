@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/evento")
+@CrossOrigin
 public class EventoController {
 
     @Autowired
@@ -68,7 +69,7 @@ public class EventoController {
         return null;
     }
 
-    @PutMapping("/altera-situacao/${id}")
+    @PutMapping("/altera-situacao/{id}")
     public ResponseEntity finalizaEvento (@PathVariable Long id){
         Optional<Evento> optional = repository.findById(id);
         if(optional.isPresent()){

@@ -54,7 +54,6 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
 
 export default {
     name: 'App',
@@ -67,9 +66,6 @@ export default {
       }
     },
     beforeMount() {
-      const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
-      Funcoes.verificaTipoUsuario()
     },
     methods:{
 

@@ -1,6 +1,5 @@
 package br.com.fatecourinhos.symposium.controller;
 
-import br.com.fatecourinhos.symposium.modelo.Evento;
 import br.com.fatecourinhos.symposium.modelo.ListaEventoParticipante;
 import br.com.fatecourinhos.symposium.repository.EventoRepository;
 import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
@@ -10,13 +9,13 @@ import br.com.fatecourinhos.symposium.vo.form.InscricaoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/lista-evento-participante")
+@CrossOrigin
 public class ListaEventoParticipanteController {
 
     @Autowired
@@ -28,7 +27,7 @@ public class ListaEventoParticipanteController {
     @Autowired
     ParticipanteRepository participanteRepository;
 
-    @GetMapping("/lista-certificados/${id}")
+    @GetMapping("/lista-certificados/{id}")
     public List<ListaDeCertificadosDto> listaParaGerarCertificados (@PathVariable Long id){
         List<ListaEventoParticipante> listaEventoParticipante = repository.findPorIdParticipanteEDataMaisProxima(id);
 
