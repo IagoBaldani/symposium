@@ -1,8 +1,6 @@
 package br.com.fatecourinhos.symposium.vo.form;
 
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -28,7 +26,4 @@ public class AutenticacaoForm {
         this.senha = senha;
     }
 
-    public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(email, senha);
-    }
 }

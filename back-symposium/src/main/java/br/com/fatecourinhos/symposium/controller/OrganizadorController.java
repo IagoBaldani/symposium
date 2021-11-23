@@ -14,18 +14,25 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/organizador")
+@CrossOrigin
 public class OrganizadorController {
 
     @Autowired
     OrganizadorRepository repository;
 
+    @GetMapping("/{id}")
+    public OrganizadorDto mostraOrganizador (@PathVariable Long id){
+        return new OrganizadorDto(repository.getById(id));
+    }
+
+
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<OrganizadorDto> editaOrganizador(@PathVariable Long id, AttOrganizadorForm form){
+    public ResponseEntity editaOrganizador(@PathVariable Long id,@RequestBody AttOrganizadorForm form){
 
         Organizador organizador = form.atualiza(id, repository);
 
-        return ResponseEntity.ok().body(new OrganizadorDto(organizador));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{email}")

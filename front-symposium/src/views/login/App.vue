@@ -8,14 +8,14 @@
       <h2 class="fw-bold"> LOGIN </h2>
       <form @submit.stop.prevent="submit">
         <div class="form-floating">
-          <input v-model="email" type="email" class="form-control mt-2 me-2 ms-2" placeholder="nome@exemplo.com.br">
+          <input type="email" class="form-control mt-2 me-2 ms-2" placeholder="nome@exemplo.com.br" id="email">
           <label>Email</label>
         </div>
         <div class="form-floating">
-          <input v-model="senha" type="password" class="form-control mt-3 me-2 ms-2" placeholder="nome@exemplo.com.br">
+          <input type="password" class="form-control mt-3 me-2 ms-2" placeholder="nome@exemplo.com.br" id="senha">
           <label>Senha</label>
         </div>
-        <input type="submit" class="form-control botao mt-5 me-2 ms-2" value="ENTRAR">
+        <input type="button" class="form-control botao mt-5 me-2 ms-2" value="ENTRAR" @click="login">
       </form>
       <div class="divisoria mt-5"></div>
       <h4 class="subtext mt-5">
@@ -30,47 +30,51 @@
 
 <script>
 import Cookie from "js-cookie";
-import axios from "axios";
+import { http } from '@/services/Config'
 
-let config = {
-  headers: {
-    ContentType: 'application/json'
-  }
-}
 
 export default {
   name: 'App',
   data(){
     return{
-      email:'',
-      senha: '',
-      tipoUsuario: ''
+      loginForm: {
+        email: '',
+        senha: ''
+      },
+      geraCookie: {
+        id: '',
+        tipo: ''
+      }
     }
+  },
+  beforeMount() {
+    Cookie.remove('id')
+    Cookie.remove('tipo')
   },
   methods:{
-    submit () {
-      axios.post('http://localhost:8081/auth/', {
-        email: this.email,
-        senha: this.senha
-      })
-      .then(response => {
-        Cookie.set('login_token', response.data.token)
-        Cookie.set('user_type', response.data.tipoUsuario)
-        Cookie.set('user_id', response.data.emailUsuario)
-        this.tipoUsuario = response.data.tipoUsuario
-        this.tipoUsuario = this.tipoUsuario.toLowerCase()
+    login () {
+      this.loginForm.email = document.querySelector('#email').value
+      this.loginForm.senha = document.querySelector('#senha').value
 
-        window.location.href = `http://localhost:8080/home-${this.tipoUsuario}`
-      })
-      .catch(erro => {
-        alert('Dados incorretos. Por favor, tente novamente')
-      })
+      http
+        .post('login', this.loginForm)
+        .then(response => {
+          this.geraCookie = response.data
+        })
+        .catch(error => {
+          alert(error)
+        })
+
+      Cookie.set('id', this.geraCookie.id)
+      Cookie.set('tipo', this.geraCookie.tipo)
+
+      if (this.geraCookie.tipo === 'ORGANIZADOR') {
+        window.location.href = 'http://localhost:8080/home-organizador'
+      }
+      else if (this.geraCookie.tipo === 'PARTICIPANTE') {
+        window.location.href = 'http://localhost:8080/home-participante'
+      }
     }
-  },
-  created () {
-    Cookie.remove('login_token')
-    Cookie.remove('user_type')
-    Cookie.remove('user_id')
   }
 }
 </script>
