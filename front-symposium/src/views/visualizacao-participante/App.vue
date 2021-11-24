@@ -9,23 +9,23 @@
           <span class="titulo">Dados do participante</span>
           <div class="mt-5">
             <label class="form-label mb-0">Nome</label>
-            <input class="form-control" type="text" value="participante.nome" disabled>
+            <input class="form-control" type="text" :value="participante.nome" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Email</label>
-            <input class="form-control" type="email" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="email" :value="participante.email" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Tipo de usuario</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" :value="participante.tipo" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">RA</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" :value="participante.ra" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">CPF</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" :value="participante.cpf" disabled>
           </div>
           <div class="mt-5">
             <a href="/edicao-participante"> <div class="btn-confirmar mb-3"> EDITAR DADOS </div> </a>
@@ -40,7 +40,8 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes"
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -49,15 +50,25 @@ export default {
     },
     data(){
       return{
-
+        participante:{},
+        idParticipante: Cookie.get('id')
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
+
+      this.getInstrutor()
     },
     methods:{
-
+      getInstrutor (){
+        http.get(`/participante/${this.idParticipante}`)
+        .then(response =>{
+          this.participante = response.data
+        })
+        .catch(error => {
+          alert(error)
+        })
+      }
     }
 }
 </script>

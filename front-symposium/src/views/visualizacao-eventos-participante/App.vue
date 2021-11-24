@@ -21,45 +21,29 @@
         <div class="col-lg-10">
           <div class="table-responsive">
             <table class="table">
-              <tbody>
-              <tr>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span> Vagas totais: <span class="fw-bold alto"> 120 </span> </span><br>
-                  <span> Vagas restantes: <span class="fw-bold"> 60 </span> </span><br><br>
-                  <a :href="'/inscricao-participante?id='+ 1"> <div class="botao-item"> INSCRIÇÃO </div> </a>
-                </td>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br><br>
-                  <span> Vagas totais: <span class="fw-bold alto"> 120 </span> </span><br>
-                  <span> Vagas restantes: <span class="fw-bold"> 60 </span> </span><br><br>
-                  <a href="/inscricao-participante"> <div class="botao-item"> INSCRIÇÃO </div> </a>
-                </td>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span> Vagas totais: <span class="fw-bold alto"> 120 </span> </span><br>
-                  <span> Vagas restantes: <span class="fw-bold"> 60 </span> </span><br><br>
-                  <a href="/inscricao-participante"> <div class="botao-item"> INSCRIÇÃO </div> </a>
-                </td>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span> Vagas totais: <span class="fw-bold alto"> 120 </span> </span><br>
-                  <span> Vagas restantes: <span class="fw-bold"> 60 </span> </span><br><br>
-                  <a href="/inscricao-participante"> <div class="botao-item"> INSCRIÇÃO </div> </a>
-                </td>
-              </tr>
+              <thead>
+                <tr>
+                  <td class="titulo-campo"> Nome </td>
+                  <td class="titulo-campo"> Descrição </td>
+                  <td class="titulo-campo"> Data de início </td>
+                  <td class="titulo-campo"> Vagas totais </td>
+                  <td class="titulo-campo"> Vagas restantes </td>
+                  <td class="titulo-campo"> Inscrição </td>
+                </tr>
+              </thead>
+              <tbody align="center">
+                <tr v-for="evento in eventos" :key="evento">
+                  <td class="campo ps-4">{{evento.nome}}</td>
+                  <td class="campo ps-4">{{ evento.descricao }}</td>
+                  <td class="campo ps-4">{{ formataDataParaMostrar(evento.dataInicio) }}</td>
+                  <td class="campo ps-4">{{ evento.vagasTotais }}</td>
+                  <td class="campo ps-4">{{evento.vagasTotais - evento.vagasPreenchidas}}</td>
+                  <td class="botao-inscricao p-0">
+                    <a :href="'/inscricao-participante?id='+ evento.id ">
+                      <img class="click-button mt-2" src="../../assets/imgs/event_available_white_24dp.svg">
+                    </a>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -71,7 +55,7 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
 
 export default {
     name: 'App',
@@ -80,15 +64,31 @@ export default {
     },
     data(){
       return{
-
+        eventos:{}
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
+
+
+      this.getEventos()
     },
     methods:{
+      getEventos () {
+        http.get('/evento/lista-de-eventos')
+        .then(response =>{
+          this.eventos = response.data
+        })
+        .catch(error => {
+          alert(error)
+        })
+      },
+      formataDataParaMostrar (data) {
+        const dataPreForm = new Date(data)
+        const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
 
+        return dataFormatada
+      }
     }
 }
 </script>
@@ -108,32 +108,23 @@ export default {
   height: 30px;
 }
 
-.table-item{
-  height: 350px;
-  min-width: 300px;
-  background-color: #FFF !important;
-  padding: 20px;
-}
-
-.alto{
-  color: darkgreen !important;
-}
-
-.botao-item{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-  padding: 5px;
-  background: linear-gradient(rgb(93,251,109), rgb(36,174,233));
+.titulo-campo{
   font-weight: bold;
-  color: #FFFFFF !important;
-  transition: all 200ms linear;
-  border: none;
-  cursor: pointer;
 }
 
-.botao-item:hover{
-  box-shadow: 0 0 10px #494848;
+tr {
+  background-color: #fff !important;
 }
+.campo{
+  font-size: 1rem;
+}
+.click-button {
+  height: 25px;
+  width: 25px;
+}
+
+.botao-inscricao {
+  background: linear-gradient(#5DFB6D, #43E754);
+}
+
 </style>

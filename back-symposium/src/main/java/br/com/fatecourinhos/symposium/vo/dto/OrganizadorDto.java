@@ -10,10 +10,10 @@ public class OrganizadorDto {
     private String tipo;
 
     public OrganizadorDto(Organizador organizador){
-        organizador.setCpf(this.cpf);
-        organizador.setTipo(this.tipo);
-        organizador.setNome(this.nome);
-        organizador.setEmail(this.email);
+        this.cpf = organizador.getCpf();
+        this.nome = organizador.getNome();
+        this.email = organizador.getUsuario().getEmail();
+        this.tipo = organizador.getTipo();
     }
 
     public String getNome() {

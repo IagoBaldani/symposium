@@ -29,7 +29,7 @@ export default {
     name: 'App',
     data(){
       return {
-        tipoUsuario: Cookie.get('user_type').toLowerCase()
+        tipoUsuario: Cookie.get('tipo').toLowerCase()
       }
     }
 }

@@ -22,7 +22,7 @@
               <tbody>
               <tr>
                 <td class="tamanho-certificado ps-4">SIADS - 1 Semestre 2021</td>
-                <td class="td-download text-center"><a href="#"><img class="download" src="../../assets/imgs/arrow_back_white_24dp.svg"> </a></td>
+                <td class="td-download text-center"><a :href="'/certificado?id='"><img class="download" src="../../assets/imgs/arrow_back_white_24dp.svg"> </a></td>
               </tr>
               </tbody>
             </table>
@@ -49,7 +49,6 @@ export default {
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
     },
     methods:{
 

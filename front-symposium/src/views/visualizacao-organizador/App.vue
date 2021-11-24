@@ -9,22 +9,22 @@
           <span class="titulo">Dados do organizador</span>
           <div class="mt-5">
             <label class="form-label mb-0">Nome</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" v-model="organizador.nome" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Email</label>
-            <input class="form-control" type="email" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="email" v-model="organizador.email" disabled>
           </div>
           <div class="mt-3">
-            <label class="form-label mb-0">Curso</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <label class="form-label mb-0">Nivel Organizacional</label>
+            <input class="form-control" type="text" v-model="organizador.tipo" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">CPF</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" v-model="organizador.cpf" disabled>
           </div>
           <div class="mt-5">
-            <button class="btn btn-confirmar">EDITAR DADOS</button>
+            <a href="http://localhost:8080/edicao-organizador"><button class="btn btn-confirmar">EDITAR DADOS</button></a>
           </div>
         </div>
         <div class="col-lg-7"></div>
@@ -36,7 +36,8 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import { http } from '@/services/Config'
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -45,13 +46,23 @@ export default {
     },
     data(){
       return{
-
+        organizador: {
+          nome: '',
+          email: '',
+          tipo: '',
+          cpf: ''
+        }
       }
     },
     beforeMount() {
-      const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
-      Funcoes.verificaTipoUsuario()
+      http
+        .get(`organizador/${Cookie.get('id')}`)
+        .then(response => {
+          this.organizador = response.data
+        })
+        .catch(error => {
+          alert(error)
+        })
     },
     methods:{
     }

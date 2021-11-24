@@ -22,10 +22,10 @@
           <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table>
               <tbody>
-              <tr>
-                <td class="tamanho-certificado ps-4">0210481913025 - Iago Baldani de Almeida</td>
+              <tr v-for="participante in participantes" :key="participante">
+                <td class="tamanho-certificado ps-4">{{ participante.ra + " - " + participante.nome }}</td>
                 <td class="td-deletar text-center"><a><img class="click-button" src="../../assets/imgs/delete_white_24dp.svg"></a></td>
-                <td class="td-download text-center"><a :href="'/edicao-participante-por-organizador?id=1'"><img class="click-button" src="../../assets/imgs/settings_white_24dp.svg"></a></td>
+                <td class="td-download text-center"><a :href="'/edicao-participante-por-organizador?id=' + participante.id"><img class="click-button" src="../../assets/imgs/settings_white_24dp.svg"></a></td>
               </tr>
               </tbody>
             </table>
@@ -39,7 +39,7 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
 
 export default {
     name: 'App',
@@ -48,16 +48,25 @@ export default {
     },
     data(){
       return{
-
+        participantes:{}
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
       Funcoes.verificaTipoUsuario()
+
+      this.getParticipantes()
     },
     methods:{
-
+      getParticipantes(){
+        http.get('/participante')
+        .then(response=>{
+          this.participantes = response.data
+        })
+        .catch(error=>{
+          alert(error)
+        })
+      }
     }
 }
 </script>

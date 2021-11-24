@@ -9,29 +9,29 @@
           <form>
             <div class="mt-5">
               <label class="form-label mb-0">Nome</label>
-              <input class="form-control" type="text" value="Nome">
+              <input class="form-control" type="text" :value="participante.nome" id="inputNome">
             </div>
             <div class="mt-3">
               <label class="form-label mb-0">Email</label>
-              <input class="form-control" type="email" value="exemplo@email.com">
+              <input class="form-control" type="email" :value="participante.email" disabled>
             </div>
             <div>
               <label class="form-label mb-0">Tipo de usuario</label>
-              <select class="form-select form-control" aria-label="Default select example">
-                <option value="1">Aluno</option>
-                <option value="2">Professor</option>
+              <select class="form-select form-control" aria-label="Default select example" id="inputTipo">
+                <option value="Aluno">Aluno</option>
+                <option value="Professor">Professor</option>
               </select>
             </div>
             <div class="mt-3">
               <label class="form-label mb-0">RA</label>
-              <input class="form-control" type="text" value="132456789" disabled>
+              <input class="form-control" type="text" :value="participante.ra" disabled>
             </div>
             <div class="mt-3">
               <label class="form-label mb-0">CPF</label>
-              <input class="form-control" type="text" value="XXXXXXXXXXX">
+              <input class="form-control" type="text" :value="participante.cpf" id="inputCpf">
             </div>
             <div class="mt-5">
-              <button class="btn btn-confirmar" type="submit">CONFIRMAR</button>
+              <button class="btn btn-confirmar" @click="putParticipante">CONFIRMAR</button>
             </div>
           </form>
         </div>
@@ -43,7 +43,7 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
 
 export default {
     name: 'App',
@@ -52,15 +52,46 @@ export default {
     },
     data(){
       return{
-
+        idParticipante:'',
+        participante:{},
+        participanteForm:{
+          nome:'',
+          tipo:'',
+          cpf:''
+        }
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
       Funcoes.verificaTipoUsuario()
+      this.idParticipante = dadosUrl.id
+      this.getParticipante(dadosUrl.id)
     },
     methods:{
+      getParticipante(id){
+        http.get(`/participante/${id}`)
+          .then(response=>{
+            this.participante = response.data
+          })
+          .catch(error=>{
+            alert(error)
+          })
+      },
+      putParticipante(){
+        this.participanteForm.nome = document.querySelector("#inputNome").value
+        this.participanteForm.tipo = document.querySelector("#inputTipo").value
+        this.participanteForm.cpf = document.querySelector("#inputCpf").value
+
+        console.log(this.idParticipante)
+        http.post(`participante/${this.idParticipante}`, this.participanteForm)
+        .then(response=>{
+          alert("Edição de participante concluída com sucesso!")
+          window.location.href = "http://localhost:8080/gerenciar-participantes-organizador"
+        })
+        .catch(error=>{
+          alert(error)
+        })
+      }
     }
 }
 </script>

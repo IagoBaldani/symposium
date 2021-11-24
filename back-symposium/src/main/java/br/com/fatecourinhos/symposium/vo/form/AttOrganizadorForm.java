@@ -7,7 +7,6 @@ public class AttOrganizadorForm {
 
     private String nome;
     private String cpf;
-    private String email;
     private String tipo;
 
     public String getNome() {
@@ -20,15 +19,9 @@ public class AttOrganizadorForm {
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getTipo() {
@@ -40,11 +33,11 @@ public class AttOrganizadorForm {
 
     public Organizador atualiza (Long id, OrganizadorRepository repository){
         Organizador organizador = repository.getById(id);
-        organizador.setEmail(this.email);
         organizador.setTipo(this.tipo);
-        organizador.setEmail(this.email);
+        organizador.setCpf(this.cpf);
         organizador.setNome(this.nome);
 
+        repository.save(organizador);
         return organizador;
     }
 }
