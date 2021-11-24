@@ -37,6 +37,13 @@ public class ListaEventoParticipanteController {
         return ListaDeCertificadosDto.toList(listaEventoParticipante);
     }
 
+    @GetMapping("/certificado/{idInscricao}")
+    public ListaDeCertificadosDto getCertificados (@PathVariable Long idInscricao){
+        ListaEventoParticipante listaEventoParticipante = repository.getById(idInscricao);
+
+        return new ListaDeCertificadosDto(listaEventoParticipante);
+    }
+
     @PostMapping("/gera-inscricao")
     public ResponseEntity geraInscricaoNoEvento (@RequestBody InscricaoForm form){
         Long idParticipante = form.getIdParticipante();

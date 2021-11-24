@@ -30,7 +30,7 @@
                 <tr v-for="certificado in listaCertificados" :key="certificado">
                   <td class="campo ps-4">{{certificado.nomeEvento}}</td>
                   <td class="campo ps-4">{{formataDataParaMostrar(certificado.dataFim)}}</td>
-                  <td class="td-download text-center"><a :href="'/certificado?id=' + this.idParticipante "><img class="download" src="../../assets/imgs/visibility_white_24dp.svg"> </a></td>
+                  <td class="td-download text-center"><a :href="'/certificado?id=' + certificado.id"><img class="download" src="../../assets/imgs/visibility_white_24dp.svg"> </a></td>
                 </tr>
               </tbody>
             </table>
@@ -54,7 +54,6 @@ export default {
     data(){
       return{
         listaCertificados:{},
-        idParticipante: ''
       }
     },
     beforeMount() {

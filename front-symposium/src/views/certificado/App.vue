@@ -12,22 +12,23 @@
         </div>
       </div>
       <div class="row d-flex justify-content-evenly mb-5">
-        <div class="col-lg-8 d-flex justify-content-center">
-          <h4> Certificamos que <span class="fw-bold"> Nome do lazarento aqui </span> participou do evento
-              <span class="fw-bold"> NOME DO EVENTO </span> realizado entre os dias
-              <span class="fw-bold"> DATA DE INÍCIO</span> e <span class="fw-bold"> DATA DE TÉRMINO</span>
-              com a carga horária total de <span class="fw-bold"> 666 Horas </span>
+        <div class="col-lg-7 d-flex justify-content-center">
+          <h4> Certificamos que <span class="fw-bold"> {{ certificado.nomeParticipante }} </span> participou do evento
+              <span class="fw-bold"> {{ certificado.nomeEvento }} </span> realizado entre os dias
+              <span class="fw-bold"> {{ formataDataParaMostrar(certificado.dataInicio) }}</span> e
+              <span class="fw-bold"> {{ formataDataParaMostrar(certificado.dataFim) }}</span>
+              com a carga horária total de <span class="fw-bold"> {{certificado.cargaHoraria}} </span> horas
           </h4>
         </div>
       </div>
       <div class="row d-flex justify-content-evenly">
         <div class="col-lg-8 d-flex justify-content-end">
-          <h5> Ourinhos, XX/XX/XXXX</h5>
+          <h5> Ourinhos, {{formataDataParaMostrar(certificado.dataFim)}}</h5>
         </div>
       </div>
       <div class="row d-flex justify-content-evenly mt-5">
         <div class="col-lg-8 d-flex justify-content-center">
-          <h6> Este certificado foi gerado pela aplicação Symposium </h6>
+          <h6> Este certificado foi gerado por Symposium </h6>
         </div>
       </div>
       <div class="row d-flex justify-content-center mt-3">
@@ -41,20 +42,36 @@
 
 <script>
 import Cookie from "js-cookie";
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
 
 export default {
   name: 'App',
   data(){
     return {
-        tipoUsuario: Cookie.get('tipo').toLowerCase()
+      certificado:{}
     }
   },
   beforeMount() {
     const dadosUrl = Funcoes.pegaDadosUrl();
+
+    this.getCertificado(dadosUrl.id)
   },
   methods: {
+    getCertificado(id){
+      http.get(`/lista-evento-participante/certificado/${id}`)
+      .then(response=>{
+        this.certificado = response.data
+      })
+      .catch(error=>{
+        alert(error)
+      })
+    },
+    formataDataParaMostrar (data) {
+      const dataPreForm = new Date(data)
+      const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
 
+      return dataFormatada
+    }
   }
 }
 </script>
