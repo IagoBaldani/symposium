@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class ListaEventosDto {
 
     private Long id;
-    private String nomeEvento;
+    private String nome;
     private String descricao;
     private LocalDate dataInicio;
     private Long cargaHoraria;
@@ -18,7 +18,7 @@ public class ListaEventosDto {
 
     public ListaEventosDto (Evento evento){
         this.id = evento.getId();
-        this.nomeEvento = evento.getNomeEvento();
+        this.nome = evento.getNomeEvento();
         this.descricao = evento.getDescricao();
         this.dataInicio = evento.getDataIni();
         this.cargaHoraria = evento.getCargaHoraria();
@@ -26,12 +26,12 @@ public class ListaEventosDto {
         this.vagasPreenchidas = evento.getNumeroVagasPreechidas();
     }
 
-    public String getNomeEvento() {
-        return nomeEvento;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {

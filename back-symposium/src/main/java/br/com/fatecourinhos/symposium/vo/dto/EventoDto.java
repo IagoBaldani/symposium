@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class EventoDto {
 
-    private String nomeEvento;
+    private String nome;
     private String descricao;
     private Long vagasTotais;
     private BigDecimal custo;
@@ -15,13 +15,14 @@ public class EventoDto {
     private LocalDate dataFinal;
     private Long cargaHoraria;
     private Long numeroVagasPreenchidas;
+    private Long vagasRestantes;
     private String status;
 
     public EventoDto() {
     }
 
     public EventoDto(Evento evento) {
-        this.nomeEvento = evento.getNomeEvento();
+        this.nome = evento.getNomeEvento();
         this.descricao = evento.getDescricao();
         this.vagasTotais = evento.getVagasTotais();
         this.custo = evento.getCusto();
@@ -29,15 +30,16 @@ public class EventoDto {
         this.dataFinal = evento.getDataFim();
         this.numeroVagasPreenchidas = evento.getNumeroVagasPreechidas();
         this.cargaHoraria = evento.getCargaHoraria();
+        this.vagasRestantes = evento.getVagasTotais() - evento.getNumeroVagasPreechidas();
         this.status = evento.getStatus();
     }
 
-    public String getNomeEvento() {
-        return nomeEvento;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {
@@ -102,5 +104,13 @@ public class EventoDto {
 
     public void setNumeroVagasPreenchidas(Long numeroVagasPreenchidas) {
         this.numeroVagasPreenchidas = numeroVagasPreenchidas;
+    }
+
+    public Long getVagasRestantes() {
+        return vagasRestantes;
+    }
+
+    public void setVagasRestantes(Long vagasRestantes) {
+        this.vagasRestantes = vagasRestantes;
     }
 }
