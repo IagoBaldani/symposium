@@ -8,7 +8,6 @@ public class InscricaoForm {
 
     private Long idParticipante;
     private Long idEvento;
-    private String situacao;
 
 
     public Long getIdParticipante() {
@@ -25,14 +24,8 @@ public class InscricaoForm {
         this.idEvento = idEvento;
     }
 
-    public String getSituacao() {
-        return situacao;
-    }
-    public void setSituacao(String situacao) {
-        situacao = situacao;
-    }
-
     public ListaEventoParticipante converte (EventoRepository eventoRepository, ParticipanteRepository participanteRepository){
+
         ListaEventoParticipante lista = new ListaEventoParticipante();
 
         lista.setSituacao("PAGAMENTO_PENDENTE");

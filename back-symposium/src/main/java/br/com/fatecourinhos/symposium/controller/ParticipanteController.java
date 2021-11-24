@@ -5,7 +5,7 @@ import br.com.fatecourinhos.symposium.modelo.Participante;
 import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.UsuarioRepository;
-import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosPorParticipantesDto;
+import br.com.fatecourinhos.symposium.vo.dto.ListaDeEventosInscritosPorParticipanteDto;
 import br.com.fatecourinhos.symposium.vo.dto.ListaDeParticipantesDto;
 import br.com.fatecourinhos.symposium.vo.dto.ParticipanteDto;
 import br.com.fatecourinhos.symposium.vo.form.AttParticipanteForm;
@@ -13,9 +13,6 @@ import br.com.fatecourinhos.symposium.vo.form.ParticipanteForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -80,11 +77,11 @@ public class ParticipanteController {
     }
 
     @GetMapping("/lista-de-eventos-inscritos/{id}")
-    public List<ListaDeEventosInscritosPorParticipantesDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
+    public List<ListaDeEventosInscritosPorParticipanteDto> listaEventosInscritosPorParticipante(@PathVariable Long id){
 
-        List<ListaEventoParticipante> listaDeEventosPorParticipante = listaEventoParticipanteRepository.findTodosOsEventosInscritos(id);
+        List<ListaEventoParticipante> listaDeEventosPorParticipante = listaEventoParticipanteRepository.findTodosOsEventosInscritosEmAndamento(id);
 
-        return ListaDeEventosInscritosPorParticipantesDto.toList(listaDeEventosPorParticipante);
+        return ListaDeEventosInscritosPorParticipanteDto.toList(listaDeEventosPorParticipante);
     }
 
     @PostMapping("/excluir/{id}")

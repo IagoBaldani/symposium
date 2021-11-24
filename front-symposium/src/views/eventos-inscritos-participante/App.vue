@@ -5,7 +5,7 @@
       <div class="row mt-3">
         <div class="col-lg-1"></div>
         <div class="col-lg-4">
-          <span class="titulo">Próximos eventos</span>
+          <span class="titulo">Eventos inscritos</span>
         </div>
       </div>
       <div class="row mt-3">
@@ -31,15 +31,16 @@
               </tr>
               </thead>
               <tbody align="center">
-              <tr>
-                <td class="campo ps-2">SIADS</td>
-                <td class="campo ps-2">Evento muito legal, isso e aquilo</td>
-                <td class="campo ps-2">{{ formataDataParaMostrar(2021-10-11) }}</td>
-                <td class="campo ps-2">Pagamento pendente</td>
-                <td class="botao-inscricao p-0">
-                  <a :href="'/inscricao-participante?id=' ">
-                    <img class="click-button mt-2" src="../../assets/imgs/event_available_white_24dp.svg">
-                  </a>
+              <tr v-for="eventoInscrito in listaEventosInscritos" :key="eventoInscrito">
+                <td class="campo ps-2">{{eventoInscrito.nomeEvento}}</td>
+                <td class="campo ps-2">{{eventoInscrito.descricao}}</td>
+                <td class="campo ps-2">{{ formataDataParaMostrar(eventoInscrito.dataInicio) }}</td>
+                <td class="campo ps-2">{{ (eventoInscrito.situacao == 'PAGAMENTO_PENDENTE'? 'Pagamento pendente':'Inscrição concluída')}}</td>
+                <td class="botao-desinscricao p-0" v-if="eventoInscrito.situacao == 'PAGAMENTO_PENDENTE'">
+                    <img class="click-button mt-2" src="../../assets/imgs/event_busy_white_24dp.svg" @click="cancelarInscricao(eventoInscrito.idInscricao)">
+                </td>
+                <td class="botao-inscrito  p-0" v-else>
+                  <img class="click-button mt-2" src="../../assets/imgs/event_available_white_24dp.svg" @click="avisoInscrito">
                 </td>
               </tr>
               </tbody>
@@ -53,7 +54,8 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -62,13 +64,36 @@ export default {
     },
     data(){
       return{
-        tipo: 'pagamentoPendente'
+        listaEventosInscritos: {}
       }
     },
     beforeMount() {
-      const dadosUrl = Funcoes.pegaDadosUrl();
+      const dadosUrl = Funcoes.pegaDadosUrl()
+      this.getListaEventosInscritos(Cookie.get('id'))
     },
     methods:{
+      async getListaEventosInscritos(id){
+        await http.get(`/participante/lista-de-eventos-inscritos/${id}`)
+        .then(response=>{
+          this.listaEventosInscritos = response.data
+        })
+        .catch(error=>{
+          alert(error)
+        })
+      },
+      cancelarInscricao(idInscricao){
+        http.post(`/lista-evento-participante/desinscricao/${idInscricao}`)
+        .then(response=>{
+          alert("Cancelamento de inscrição concluído com sucesso!")
+          window.location.reload()
+        })
+        .catch(error=>{
+          alert(error)
+        })
+      },
+      avisoInscrito(){
+        alert("Seu pagamento já foi processado, portanto, não pode se desinscrever do evento!")
+      },
       formataDataParaMostrar (data) {
         const dataPreForm = new Date(data)
         const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
@@ -107,10 +132,15 @@ tr {
 .click-button {
   height: 25px;
   width: 25px;
+  cursor: pointer;
 }
 
-.botao-inscricao {
+.botao-desinscricao {
   background: linear-gradient(#FB5D5D, #F81212)
+}
+
+.botao-inscrito {
+  background: linear-gradient(#5DFB6D, #43E754);
 }
 
 </style>

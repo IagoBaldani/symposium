@@ -44,6 +44,12 @@ public class EventoController {
         return ListaEventosDto.toList(listaDeEventos);
     }
 
+//    //PENDENTE - DEVE RETORNAR UMA LISTA COM OS EVENTOS NO QUAL O PARTICIPANTE NÃO ESTÁ INSCRITO
+//    @GetMapping("/lista-de-eventos-nao-inscritos/{$id}")
+//    public List<ListaEventosDto> listaEventosNaoInscritos(@PathVariable Long id){
+//
+//    }
+
     @PostMapping
     @Transactional
     public ResponseEntity criaEvento(@RequestBody EventoForm form){
