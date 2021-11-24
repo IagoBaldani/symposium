@@ -24,7 +24,7 @@
               <tbody>
               <tr v-for="participante in participantes" :key="participante">
                 <td class="tamanho-certificado ps-4">{{ participante.ra + " - " + participante.nome }}</td>
-                <td class="td-deletar text-center"><a><img class="click-button" src="../../assets/imgs/delete_white_24dp.svg"></a></td>
+                <td class="td-deletar text-center"><img class="click-button" src="../../assets/imgs/delete_white_24dp.svg" @click="deletarParticipante(participante.id, participante.email)"></td>
                 <td class="td-download text-center"><a :href="'/edicao-participante-por-organizador?id=' + participante.id"><img class="click-button" src="../../assets/imgs/settings_white_24dp.svg"></a></td>
               </tr>
               </tbody>
@@ -66,6 +66,24 @@ export default {
         .catch(error=>{
           alert(error)
         })
+      },
+      async deletarParticipante(id, email){
+        let resultado = confirm("Deseja mesmo deletar o participante?")
+
+        if(resultado == true){
+          await http.post(`/participante/excluir/${id}`)
+          .catch(error =>{
+            alert("Erro no Delete Participante: " + error)
+          })
+
+          await http.post(`/usuario/excluir/${email}`)
+          .catch(error =>{
+            alert("Erro no Delete Usuário: " + error)
+          })
+
+          alert(`Exclusão do '${email}' concluída com sucesso!`)
+          window.location.reload()
+        }
       }
     }
 }
@@ -112,6 +130,7 @@ tr {
 .click-button {
   height: 40px;
   width: 40px;
+  cursor: pointer;
 }
 
 .td-download {

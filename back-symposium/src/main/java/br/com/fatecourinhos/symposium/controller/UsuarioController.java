@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.rmi.AlreadyBoundException;
 import java.util.Optional;
 
@@ -53,5 +54,18 @@ public class UsuarioController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e);
         }
+    }
+
+    @PostMapping("/excluir/{id}")
+    @Transactional
+    public ResponseEntity deletaUsuario(@PathVariable String id){
+        Optional<Usuario> optionalUsuario = repository.findById(id);
+
+        if(optionalUsuario.isPresent()){
+            repository.deleteById(id);
+            return ResponseEntity.ok().body("O usuário foi excluído com sucesso!");
+        }
+
+        return ResponseEntity.badRequest().body("Não há nenhum usuário com o ID informado!");
     }
 }

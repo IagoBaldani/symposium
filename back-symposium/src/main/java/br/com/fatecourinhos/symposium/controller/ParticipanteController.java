@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -84,5 +85,18 @@ public class ParticipanteController {
         List<ListaEventoParticipante> listaDeEventosPorParticipante = listaEventoParticipanteRepository.findTodosOsEventosInscritos(id);
 
         return ListaDeEventosInscritosPorParticipantesDto.toList(listaDeEventosPorParticipante);
+    }
+
+    @PostMapping("/excluir/{id}")
+    @Transactional
+    public ResponseEntity deletaParticipante(@PathVariable Long id){
+        Optional<Participante> optionalParticipante = participanteRepository.findById(id);
+
+        if(optionalParticipante.isPresent()){
+            participanteRepository.deleteById(id);
+            return ResponseEntity.ok().body("Participante excluído com sucesso!");
+        }
+
+        return ResponseEntity.badRequest().body("Não há nenhum participante com o ID informado!");
     }
 }
