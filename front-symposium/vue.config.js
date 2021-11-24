@@ -113,6 +113,12 @@ module.exports= {
           template: 'public/index.html',
           title: 'Acesso negado',
           chunks: ['chunk-vendors', 'chunk-common', 'acesso-negado']
+        },
+        'certificado': {
+          entry: './src/views/certificado/main.js',
+          template: 'public/index.html',
+          title: 'Certificado',
+          chunks: ['chunk-vendors', 'chunk-common', 'certificado']
         }
     }
 }

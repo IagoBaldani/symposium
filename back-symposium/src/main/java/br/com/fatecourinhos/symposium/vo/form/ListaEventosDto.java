@@ -8,34 +8,43 @@ import java.util.stream.Collectors;
 
 public class ListaEventosDto {
 
-    private String nomeEvento;
+    private Long id;
+    private String nome;
     private String descricao;
     private LocalDate dataInicio;
     private Long cargaHoraria;
     private Long vagasTotais;
     private Long vagasPreenchidas;
+    private Long vagasRestantes;
 
     public ListaEventosDto (Evento evento){
-        this.nomeEvento = evento.getNomeEvento();
+        this.id = evento.getId();
+        this.nome = evento.getNomeEvento();
         this.descricao = evento.getDescricao();
         this.dataInicio = evento.getDataIni();
         this.cargaHoraria = evento.getCargaHoraria();
         this.vagasTotais = evento.getVagasTotais();
         this.vagasPreenchidas = evento.getNumeroVagasPreechidas();
+        this.vagasRestantes = evento.getVagasTotais() - evento.getNumeroVagasPreechidas();
     }
 
-    public String getNomeEvento() {
-        return nomeEvento;
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nomeEvento) {
+        this.nome = nomeEvento;
     }
 
     public String getDescricao() {
         return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -43,7 +52,6 @@ public class ListaEventosDto {
     public LocalDate getDataInicio() {
         return dataInicio;
     }
-
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
@@ -51,7 +59,6 @@ public class ListaEventosDto {
     public Long getCargaHoraria() {
         return cargaHoraria;
     }
-
     public void setCargaHoraria(Long cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
@@ -59,7 +66,6 @@ public class ListaEventosDto {
     public Long getVagasTotais() {
         return vagasTotais;
     }
-
     public void setVagasTotais(Long vagasTotais) {
         this.vagasTotais = vagasTotais;
     }
@@ -67,9 +73,15 @@ public class ListaEventosDto {
     public Long getVagasPreenchidas() {
         return vagasPreenchidas;
     }
-
     public void setVagasPreenchidas(Long vagasPreenchidas) {
         this.vagasPreenchidas = vagasPreenchidas;
+    }
+
+    public Long getVagasRestantes() {
+        return vagasRestantes;
+    }
+    public void setVagasRestantes(Long vagasRestantes) {
+        this.vagasRestantes = vagasRestantes;
     }
 
     public static List<ListaEventosDto> toList (List<Evento> eventos){
