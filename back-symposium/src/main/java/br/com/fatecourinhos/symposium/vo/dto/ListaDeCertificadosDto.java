@@ -14,6 +14,7 @@ public class ListaDeCertificadosDto {
     private String nomeParticipante;
     private Long cargaHoraria;
     private LocalDate dataFim;
+    private LocalDate dataInicio;
 
     public ListaDeCertificadosDto (ListaEventoParticipante listaEventoParticipante){
         this.id = listaEventoParticipante.getId();
@@ -21,12 +22,12 @@ public class ListaDeCertificadosDto {
         this.nomeParticipante = listaEventoParticipante.getParticipante().getNome();
         this.cargaHoraria = listaEventoParticipante.getEvento().getCargaHoraria();
         this.dataFim = listaEventoParticipante.getEvento().getDataFim();
+        this.dataInicio = listaEventoParticipante.getEvento().getDataIni();
     }
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -34,7 +35,6 @@ public class ListaDeCertificadosDto {
     public String getNomeEvento() {
         return nomeEvento;
     }
-
     public void setNomeEvento(String nomeEvento) {
         this.nomeEvento = nomeEvento;
     }
@@ -42,7 +42,6 @@ public class ListaDeCertificadosDto {
     public String getNomeParticipante() {
         return nomeParticipante;
     }
-
     public void setNomeParticipante(String nomeParticipante) {
         this.nomeParticipante = nomeParticipante;
     }
@@ -50,7 +49,6 @@ public class ListaDeCertificadosDto {
     public Long getCargaHoraria() {
         return cargaHoraria;
     }
-
     public void setCargaHoraria(Long cargaHoraria) {
         cargaHoraria = cargaHoraria;
     }
@@ -58,9 +56,15 @@ public class ListaDeCertificadosDto {
     public LocalDate getDataFim() {
         return dataFim;
     }
-
     public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
+    }
+
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
     public static List<ListaDeCertificadosDto> toList(List<ListaEventoParticipante> lista){

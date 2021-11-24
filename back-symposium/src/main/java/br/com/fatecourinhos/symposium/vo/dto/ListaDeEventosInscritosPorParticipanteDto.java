@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ListaDeEventosInscritosPorParticipantesDto {
+public class ListaDeEventosInscritosPorParticipanteDto {
 
     private Long idParticipante;
     private String nomeParticipante;
@@ -17,8 +17,9 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private Long cargaHoraria;
+    private Long idInscricao;
 
-    public ListaDeEventosInscritosPorParticipantesDto(ListaEventoParticipante listaEventoParticipante){
+    public ListaDeEventosInscritosPorParticipanteDto(ListaEventoParticipante listaEventoParticipante){
         this.idParticipante = listaEventoParticipante.getParticipante().getId();
         this.idEvento = listaEventoParticipante.getEvento().getId();
         this.nomeEvento = listaEventoParticipante.getEvento().getNomeEvento();
@@ -28,12 +29,12 @@ public class ListaDeEventosInscritosPorParticipantesDto {
         this.dataInicio = listaEventoParticipante.getEvento().getDataIni();
         this.dataFim = listaEventoParticipante.getEvento().getDataFim();
         this.cargaHoraria = listaEventoParticipante.getEvento().getCargaHoraria();
+        this.idInscricao = listaEventoParticipante.getId();
     }
 
     public Long getIdParticipante() {
         return idParticipante;
     }
-
     public void setIdParticipante(Long idParticipante) {
         this.idParticipante = idParticipante;
     }
@@ -41,7 +42,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public String getNomeParticipante() {
         return nomeParticipante;
     }
-
     public void setNomeParticipante(String nomeParticipante) {
         this.nomeParticipante = nomeParticipante;
     }
@@ -49,7 +49,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public Long getIdEvento() {
         return idEvento;
     }
-
     public void setIdEvento(Long idEvento) {
         this.idEvento = idEvento;
     }
@@ -57,7 +56,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public String getNomeEvento() {
         return nomeEvento;
     }
-
     public void setNomeEvento(String nomeEvento) {
         this.nomeEvento = nomeEvento;
     }
@@ -65,7 +63,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public String getSituacao() {
         return situacao;
     }
-
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
@@ -73,7 +70,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public String getDescricao() {
         return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -81,7 +77,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public LocalDate getDataInicio() {
         return dataInicio;
     }
-
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
@@ -89,7 +84,6 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public LocalDate getDataFim() {
         return dataFim;
     }
-
     public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
@@ -97,12 +91,18 @@ public class ListaDeEventosInscritosPorParticipantesDto {
     public Long getCargaHoraria() {
         return cargaHoraria;
     }
-
     public void setCargaHoraria(Long cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 
-    public static List<ListaDeEventosInscritosPorParticipantesDto> toList (List<ListaEventoParticipante> lista){
-        return lista.stream().map(ListaDeEventosInscritosPorParticipantesDto::new).collect(Collectors.toList());
+    public Long getIdInscricao() {
+        return idInscricao;
+    }
+    public void setIdInscricao(Long idInscricao) {
+        this.idInscricao = idInscricao;
+    }
+
+    public static List<ListaDeEventosInscritosPorParticipanteDto> toList (List<ListaEventoParticipante> lista){
+        return lista.stream().map(ListaDeEventosInscritosPorParticipanteDto::new).collect(Collectors.toList());
     }
 }

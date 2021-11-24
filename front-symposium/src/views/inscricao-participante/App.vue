@@ -29,7 +29,7 @@
             <input class="form-control vagas-restantes" type="text" :value="evento.vagasRestantes" disabled>
           </div>
           <div class="mt-5">
-            <button class="btn btn-confirmar">CONFIRMAR</button>
+            <button class="btn btn-confirmar" @click="inscricaoEvento">CONFIRMAR</button>
           </div>
         </div>
         <div class="col-lg-1"></div>
@@ -57,6 +57,7 @@
 <script>
 import Header from '../../components/Header.vue'
 import Funcoes, {http} from "@/services/Funcoes";
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -65,12 +66,18 @@ export default {
     },
     data(){
       return{
-        evento: {}
+        idEventoUrl: '',
+        evento: {},
+        inscricaoForm: {
+          idEvento: '',
+          idParticipante: ''
+        }
+
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-
+      this.idEventoUrl = dadosUrl.id
       this.getEvento(dadosUrl.id)
     },
     methods:{
@@ -80,6 +87,19 @@ export default {
           this.evento = response.data
         })
         .catch(error =>{
+          alert(error)
+        })
+      },
+      inscricaoEvento(){
+        this.inscricaoForm.idEvento = this.idEventoUrl;
+        this.inscricaoForm.idParticipante = Cookie.get('id')
+
+        http.post(`/lista-evento-participante/gera-inscricao`, this.inscricaoForm)
+        .then(response=>{
+          alert("Participante inscrito com sucesso!")
+          window.location.href = "http://localhost:8080/eventos-inscritos-participante"
+        })
+        .catch(error=>{
           alert(error)
         })
       }

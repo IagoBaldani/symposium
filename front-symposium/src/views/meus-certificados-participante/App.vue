@@ -17,13 +17,21 @@
       <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-10 format">
-          <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table>
-              <tbody>
+          <div class="table-responsive">
+            <table class="table">
+              <thead align="center">
               <tr>
-                <td class="tamanho-certificado ps-4">SIADS - 1 Semestre 2021</td>
-                <td class="td-download text-center"><a :href="'/certificado?id='"><img class="download" src="../../assets/imgs/arrow_back_white_24dp.svg"> </a></td>
+                <td class="titulo-campo"> Nome </td>
+                <td class="titulo-campo"> Data do término </td>
+                <td class="titulo-campo"> Visualização </td>
               </tr>
+              </thead>
+              <tbody align="center">
+                <tr v-for="certificado in listaCertificados" :key="certificado">
+                  <td class="campo ps-4">{{certificado.nomeEvento}}</td>
+                  <td class="campo ps-4">{{formataDataParaMostrar(certificado.dataFim)}}</td>
+                  <td class="td-download text-center"><a :href="'/certificado?id=' + this.idParticipante "><img class="download" src="../../assets/imgs/visibility_white_24dp.svg"> </a></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -35,7 +43,8 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -44,14 +53,32 @@ export default {
     },
     data(){
       return{
-
+        listaCertificados:{},
+        idParticipante: ''
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
+
+      this.idParticipante = Cookie.get('id')
+      this.getListaCertificados(Cookie.get('id'))
     },
     methods:{
+      getListaCertificados(id){
+        http.get(`/lista-evento-participante/lista-certificados/${id}`)
+        .then(response=>{
+          this.listaCertificados = response.data
+        })
+        .catch(error =>{
+          alert(error)
+        })
+      },
+      formataDataParaMostrar (data) {
+        const dataPreForm = new Date(data)
+        const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
 
+        return dataFormatada
+      }
     }
 }
 </script>
@@ -77,33 +104,23 @@ export default {
 }
 
 .download {
-  transform: rotate(270deg);
   height: 40px;
   width: 40px;
 }
 
 .td-download {
   background: linear-gradient(90deg, #5DFB6D, #43E754);
-  width: 66px;
-  height: 66px;
-}
-
-.my-custom-scrollbar {
-  position: relative;
-  height: 59vh;
-  overflow: auto;
-}
-
-.table-wrapper-scroll-y {
-  display: block;
-  height: 59vh;
 }
 
 tr {
   background-color: #fff !important;
 }
-.tamanho-certificado{
-  font-size: 1.5rem;
-  width: 1533px;
+
+.titulo-campo{
+  font-weight: bold;
+}
+
+.campo{
+  font-size: 1rem;
 }
 </style>
