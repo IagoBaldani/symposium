@@ -21,43 +21,25 @@
         <div class="col-lg-10">
           <div class="table-responsive">
             <table class="table">
-              <tbody>
+              <thead align="center">
               <tr>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span>Situação: </span><br>
-                  <span class="fw-bold baixo">Pagamento pendente </span><br><br>
-                  <div v-if="this.tipo=='pagamentoPendente'" class="botao-item" data-bs-toggle="modal" data-bs-target="#exampleModal"> DESINSCREVER-SE </div>
-                </td>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span>Situação: </span><br>
-                  <span class="fw-bold baixo">Pagamento pendente </span><br><br>
-                  <div class="botao-item"> DESINSCREVER-SE </div>
-                </td>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span>Situação: </span><br>
-                  <span class="fw-bold baixo">Pagamento pendente </span><br><br>
-                  <div class="botao-item"> DESINSCREVER-SE </div>
-                </td>
-                <td class="table-item">
-                  <span >SIADS</span> <br><br>
-                  <span class="fw-bold"> 10/10/2021 </span> <br><br><br>
-                  <span> Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit, sed do eiusmod tempor </span> <br> <br>
-                  <span>Situação: </span><br>
-                  <span class="fw-bold baixo">Pagamento pendente </span><br><br>
-                  <div class="botao-item"> DESINSCREVER-SE </div>
+                <td class="titulo-campo"> Nome </td>
+                <td class="titulo-campo"> Descrição </td>
+                <td class="titulo-campo"> Data </td>
+                <td class="titulo-campo"> Situação </td>
+                <td class="titulo-campo"> Desinscrição </td>
+              </tr>
+              </thead>
+              <tbody align="center">
+              <tr>
+                <td class="campo ps-2">SIADS</td>
+                <td class="campo ps-2">Evento muito legal, isso e aquilo</td>
+                <td class="campo ps-2">{{ formataDataParaMostrar(2021-10-11) }}</td>
+                <td class="campo ps-2">Pagamento pendente</td>
+                <td class="botao-inscricao p-0">
+                  <a :href="'/inscricao-participante?id=' ">
+                    <img class="click-button mt-2" src="../../assets/imgs/event_available_white_24dp.svg">
+                  </a>
                 </td>
               </tr>
               </tbody>
@@ -67,48 +49,6 @@
       </div>
     </div>
   </main>
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-xl modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header border-0">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body d-flex justify-content-between">
-          <div>
-            <h1 class="modal-title form-label fw-bold mb-0 titulo">
-              Deseja mesmo cancelar sua inscrição no evento?
-            </h1>
-          </div>
-          <div class="conteudomodal">
-            <h2 class="fw-bold subtitulo">
-              Nome do evento
-            </h2>
-          </div>
-        </div>
-        <div class="modal-footer border-0 justify-content-around">
-          <div>
-            <button type="button" class="btn submit-modal">CONFIRMAR</button>
-          </div>
-          <div>
-            <button type="button" class="btn cancel-modal" data-bs-dismiss="modal">
-              CANCELAR
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -129,7 +69,12 @@ export default {
       const dadosUrl = Funcoes.pegaDadosUrl();
     },
     methods:{
+      formataDataParaMostrar (data) {
+        const dataPreForm = new Date(data)
+        const dataFormatada = `${dataPreForm.getUTCDate()}/${dataPreForm.getUTCMonth() + 1}/${dataPreForm.getUTCFullYear()}`
 
+        return dataFormatada
+      }
     }
 }
 </script>
@@ -149,82 +94,23 @@ export default {
   height: 30px;
 }
 
-.table-item{
-  height: 350px;
-  min-width: 300px;
-  background-color: #FFF !important;
-  padding: 20px;
-}
-
-.alto{
-  color: darkgreen !important;
-}
-.baixo{
-  color: darkred !important;
-}
-
-.botao-item{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-  padding: 5px;
-  background: linear-gradient(#FB5D5D, #F81212);
+.titulo-campo{
   font-weight: bold;
-  color: #FFFFFF !important;
-  transition: all 200ms linear;
-  border: none;
-  cursor: pointer;
 }
 
-.botao-item:hover{
-  box-shadow: 0 0 10px #494848;
+tr {
+  background-color: #fff !important;
+}
+.campo{
+  font-size: 1rem;
+}
+.click-button {
+  height: 25px;
+  width: 25px;
 }
 
-.modal-body,
-.modal-header,
-.modal-footer {
-  text-align: center;
-  background-color: #ebebeb;
+.botao-inscricao {
+  background: linear-gradient(#FB5D5D, #F81212)
 }
 
-.modal-body {
-  min-height: 55vh;
-  flex-direction: column;
-}
-
-.submit-modal,
-.cancel-modal {
-  color: white !important;
-  font-weight: bold !important;
-  border-radius: 5px !important;
-  width: 350px;
-  font-size: 25px !important;
-  transition: all 0.2s linear;
-  border: none;
-}
-
-.submit-modal {
-  background: linear-gradient(rgb(93,251,109), rgb(36,174,233));
-}
-
-.cancel-modal {
-  background: linear-gradient(#FB5D5D, #F81212);
-}
-
-.submit-modal:hover, .cancel-modal:hover{
-  box-shadow: 0px 0px 10px #7C7C7C;
-}
-
-.conteudomodal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 40vh;
-  font-size: 21px;
-}
-
-.modal-content {
-  height: 80vh !important;
-}
 </style>

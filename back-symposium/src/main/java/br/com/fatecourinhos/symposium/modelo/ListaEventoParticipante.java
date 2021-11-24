@@ -21,7 +21,6 @@ public class ListaEventoParticipante {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -29,7 +28,6 @@ public class ListaEventoParticipante {
     public Participante getParticipante() {
         return participante;
     }
-
     public void setParticipante(Participante participante) {
         this.participante = participante;
     }
@@ -37,7 +35,6 @@ public class ListaEventoParticipante {
     public Evento getEvento() {
         return evento;
     }
-
     public void setEvento(Evento evento) {
         this.evento = evento;
     }
@@ -45,7 +42,6 @@ public class ListaEventoParticipante {
     public String getSituacao() {
         return situacao;
     }
-
     public void setSituacao(String situacao) {
         this.situacao = situacao;
     }
