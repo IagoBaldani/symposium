@@ -103,7 +103,7 @@ export default {
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
+
       Funcoes.verificaTipoUsuario()
     },
     methods:{

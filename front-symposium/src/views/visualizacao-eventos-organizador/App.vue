@@ -14,19 +14,19 @@
         <div class="col-lg-4">
           <div class="mt-5">
             <label class="form-label mb-0">Nome do evento</label>
-            <input class="form-control" type="text" value="Gustavo de Oliveira Juliano" disabled>
+            <input class="form-control" type="text" :value="evento.nome" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Descrição</label>
-            <textarea class="form-control" rows="5" disabled>Texto...</textarea>
+            <textarea class="form-control" rows="5" :value="evento.descricao" disabled></textarea>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Vagas totais</label>
-            <input class="form-control vagas-totais" type="text" value="120" disabled>
+            <input class="form-control" type="text" :value="evento.vagasTotais" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Vagas restantes</label>
-            <input class="form-control vagas-restantes" type="text" value="60" disabled>
+            <input class="form-control" type="text" :value="evento.vagasRestantes" disabled>
           </div>
           <div class="mt-5">
             <button class="btn btn-confirmar" @click="listaParticipantes">LISTA DE PARTICIPANTES INSCRITOS</button>
@@ -36,15 +36,20 @@
         <div class="col-lg-4">
           <div class="mt-5">
             <label class="form-label mb-0">Custo</label>
-            <input class="form-control" type="text" value="Gratuito" disabled>
+            <input class="form-control" type="text" v-if="evento.custo == 0" value="Gratuito" disabled>
+            <input class="form-control" type="text" v-else :value="evento.custo" disabled>
+          </div>
+          <div class="mt-3">
+            <label class="form-label mb-0">Carga horária</label>
+            <input class="form-control" type="text" :value="evento.cargaHoraria" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Data de início</label>
-            <input class="form-control" type="date" value="10/12/2021" disabled>
+            <input class="form-control" type="date" :value="evento.dataInicio" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Data de término</label>
-            <input class="form-control" type="date" value="15/12/2021" disabled>
+            <input class="form-control" type="date" :value="evento.dataFinal" disabled>
           </div>
         </div>
         <div class="col-lg-2"></div>
@@ -56,7 +61,7 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes from "@/services/Funcoes";
+import Funcoes, {http} from "@/services/Funcoes";
 
 export default {
     name: 'App',
@@ -65,15 +70,26 @@ export default {
     },
     data(){
       return{
-
+        evento:{}
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaToken()
       Funcoes.verificaTipoUsuario()
+
+      this.getEvento(dadosUrl.id)
+
     },
     methods:{
+      getEvento(id){
+        http.get(`/evento/${id}`)
+        .then(response=>{
+          this.evento = response.data
+        })
+        .catch(error =>{
+          alert(error)
+        })
+      },
       listaParticipantes () {
         window.location.href = '/lista-participantes-inscritos-organizador'
       }
@@ -103,12 +119,7 @@ input{
 }
 textarea{
   resize: none;
-  color: #7C7C7C !important;
+  color: black !important;
 }
-.vagas-restantes{
-  color: darkgoldenrod !important;
-}
-.vagas-totais{
-  color: #02C715 !important;
-}
+
 </style>

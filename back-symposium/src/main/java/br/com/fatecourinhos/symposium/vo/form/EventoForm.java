@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class EventoForm {
 
-    private String nomeEvento;
+    private String nome;
     private String descricao;
     private Long vagasTotais;
     private BigDecimal custo;
@@ -18,7 +18,7 @@ public class EventoForm {
 
     public Evento converte(){
         Evento evento = new Evento();
-        evento.setNomeEvento(this.nomeEvento);
+        evento.setNomeEvento(this.nome);
         evento.setCusto(this.custo);
         evento.setDescricao(this.descricao);
         evento.setVagasTotais(this.vagasTotais);
@@ -29,12 +29,11 @@ public class EventoForm {
         return evento;
     }
 
-    public String getNomeEvento() {
-        return nomeEvento;
+    public String getNome() {
+        return nome;
     }
-
-    public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {

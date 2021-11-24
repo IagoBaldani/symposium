@@ -6,7 +6,7 @@
     </div>
     <div class="principal">
       <h2 class="fw-bold"> LOGIN </h2>
-      <form @submit.stop.prevent="submit">
+      <form>
         <div class="form-floating">
           <input type="email" class="form-control mt-2 me-2 ms-2" placeholder="nome@exemplo.com.br" id="email">
           <label>Email</label>

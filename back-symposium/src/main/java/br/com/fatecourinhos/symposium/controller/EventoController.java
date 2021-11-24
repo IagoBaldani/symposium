@@ -38,7 +38,7 @@ public class EventoController {
     }
 
     @GetMapping("/lista-de-eventos")
-    public List<ListaEventosDto> listaEventosParaParticipante (){
+    public List<ListaEventosDto> listaEventosAtivos (){
         List<Evento> listaDeEventos = repository.findTodosPorStatus();
 
         return ListaEventosDto.toList(listaDeEventos);
@@ -46,18 +46,20 @@ public class EventoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<EventoDto> criaEvento(@RequestBody EventoForm form, UriComponentsBuilder uriBuilder){
-        Evento evento = form.converte();
-        repository.save(evento);
+    public ResponseEntity criaEvento(@RequestBody EventoForm form){
+        try {
+            Evento evento = form.converte();
+            repository.save(evento);
 
-        URI uri = uriBuilder.path("/api/evento/{id}").buildAndExpand(evento.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new EventoDto(evento));
+            return ResponseEntity.ok().body("Cadastro de evento concluído com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e);
+        }
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<EventoDto> atualizaEnvento(@PathVariable Long id ,@RequestBody AtualizaEventoForm form){
+    public ResponseEntity<EventoDto> atualizaEvento(@PathVariable Long id ,@RequestBody AtualizaEventoForm form){
         Optional<Evento> optional = repository.findById(id);
 
         if(optional.isPresent()){
@@ -70,7 +72,7 @@ public class EventoController {
     }
 
     @PutMapping("/altera-situacao/{id}")
-    public ResponseEntity finalizaEvento (@PathVariable Long id){
+    public ResponseEntity alteraSituacao(@PathVariable Long id){
         Optional<Evento> optional = repository.findById(id);
         if(optional.isPresent()){
             Evento evento = optional.get();
