@@ -29,7 +29,7 @@ export default {
   },
   data(){
     return{
-      tipoUsuario: Cookie.get("tipo").toLowerCase()
+      tipoUsuario: Cookie.get('tipo').toLowerCase()
     }
   }
 }

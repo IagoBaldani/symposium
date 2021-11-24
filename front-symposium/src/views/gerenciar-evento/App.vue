@@ -20,10 +20,10 @@
           <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table>
               <tbody>
-              <tr v-for="evento in eventos" :key="evento">
-                <td class="tamanho-certificado ps-4">{{evento.nome}}</td>
-                <td class=" tamanho-vagas text-center ps-4">{{evento.vagasRestantes + " / " + evento.vagasTotais}}</td>
-                <td class="td-deletar text-center"><img class="click-button" src="../../assets/imgs/delete_white_24dp.svg" @click="deletaEvento"></td>
+              <tr v-for="evento in listaDeEventos" v-bind:key="evento">
+                <td class="tamanho-certificado ps-4">{{ evento.nomeEvento }}</td>
+                <td class=" tamanho-vagas text-center ps-4">{{ evento.vagasPreenchidas }}/{{evento.vagasTotais}}</td>
+                <td class="td-deletar text-center"><a><img class="click-button" src="../../assets/imgs/delete_white_24dp.svg"></a></td>
                 <td class="td-visualizar text-center"><a :href="'/visualizacao-eventos-organizador?id=' + evento.id"><img class="click-button" src="../../assets/imgs/visibility_white_24dp.svg"></a></td>
                 <td class="td-download text-center"><a :href="'/cadastro-edicao-evento?tipo=edicao&id=' + evento.id"><img class="click-button" src="../../assets/imgs/settings_white_24dp.svg"></a></td>
               </tr>
@@ -38,7 +38,8 @@
 
 <script>
 import Header from '../../components/Header.vue'
-import Funcoes, {http} from "@/services/Funcoes";
+import { http } from '@/services/Config'
+import Cookie from "js-cookie";
 
 export default {
     name: 'App',
@@ -46,26 +47,24 @@ export default {
         Header
     },
 
-    data(){
+    data () {
       return{
-        eventos: {}
+        listaDeEventos: {}
       }
     },
-    beforeMount() {
-      const dadosUrl = Funcoes.pegaDadosUrl();
-      Funcoes.verificaTipoUsuario()
-
-      this.getEventos()
+    beforeMount () {
+      this.pegaLista()
     },
     methods:{
-      async getEventos (){
-        http.get('/evento/lista-de-eventos')
-        .then(response=>{
-          this.eventos = response.data
-        })
-        .catch(error=>{
-          alert(error)
-        })
+      pegaLista () {
+        http
+          .get('evento/lista-de-eventos')
+          .then(response => {
+            this.listaDeEventos = response.data
+          })
+          .catch(error => {
+            alert(error)
+          })
       }
     }
 }
