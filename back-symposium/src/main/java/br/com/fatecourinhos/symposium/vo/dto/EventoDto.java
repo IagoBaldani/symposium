@@ -7,57 +7,59 @@ import java.time.LocalDate;
 
 public class EventoDto {
 
-    private String nome;
+    private String nomeEvento;
     private String descricao;
     private Long vagasTotais;
     private BigDecimal custo;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
     private Long cargaHoraria;
-    private Long vagasPreenchidas;
-    private Long vagasRestantes;
+    private Long numeroVagasPreenchidas;
     private String status;
 
     public EventoDto() {
     }
 
     public EventoDto(Evento evento) {
-        this.nome= evento.getNomeEvento();
+        this.nomeEvento = evento.getNomeEvento();
         this.descricao = evento.getDescricao();
         this.vagasTotais = evento.getVagasTotais();
         this.custo = evento.getCusto();
         this.dataInicio = evento.getDataIni();
         this.dataFinal = evento.getDataFim();
-        this.vagasPreenchidas = evento.getNumeroVagasPreechidas();
+        this.numeroVagasPreenchidas = evento.getNumeroVagasPreechidas();
         this.cargaHoraria = evento.getCargaHoraria();
         this.status = evento.getStatus();
-        this.vagasRestantes = evento.getVagasTotais() - evento.getNumeroVagasPreechidas();
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeEvento() {
+        return nomeEvento;
     }
-    public void setNome(String nomeEvento) {
-        this.nome = nomeEvento;
+
+    public void setNomeEvento(String nomeEvento) {
+        this.nomeEvento = nomeEvento;
     }
 
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    public long getVagasTotais() {
+    public Long getVagasTotais() {
         return vagasTotais;
     }
-    public void setVagasTotais(long vagasTotais) {
+
+    public void setVagasTotais(Long vagasTotais) {
         this.vagasTotais = vagasTotais;
     }
 
     public BigDecimal getCusto() {
         return custo;
     }
+
     public void setCusto(BigDecimal custo) {
         this.custo = custo;
     }
@@ -65,6 +67,7 @@ public class EventoDto {
     public LocalDate getDataInicio() {
         return dataInicio;
     }
+
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
@@ -72,6 +75,7 @@ public class EventoDto {
     public LocalDate getDataFinal() {
         return dataFinal;
     }
+
     public void setDataFinal(LocalDate dataFinal) {
         this.dataFinal = dataFinal;
     }
@@ -79,28 +83,24 @@ public class EventoDto {
     public Long getCargaHoraria() {
         return cargaHoraria;
     }
+
     public void setCargaHoraria(Long cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 
-    public Long getVagasPreenchidas() {
-        return vagasPreenchidas;
-    }
-    public void setVagasPreenchidas(Long vagasPreenchidas) {
-        this.vagasPreenchidas = vagasPreenchidas;
+    public Long getNumeroVagasPreenchidas() {
+        return numeroVagasPreenchidas;
     }
 
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public Long getVagasRestantes() {
-        return vagasRestantes;
-    }
-    public void setVagasRestantes(Long vagasRestantes) {
-        this.vagasRestantes = vagasRestantes;
+    public void setNumeroVagasPreenchidas(Long numeroVagasPreenchidas) {
+        this.numeroVagasPreenchidas = numeroVagasPreenchidas;
     }
 }
