@@ -15,6 +15,7 @@ public class EventoDto {
     private LocalDate dataFinal;
     private Long cargaHoraria;
     private Long numeroVagasPreenchidas;
+    private Long vagasRestantes;
     private String status;
 
     public EventoDto() {
@@ -29,6 +30,7 @@ public class EventoDto {
         this.dataFinal = evento.getDataFim();
         this.numeroVagasPreenchidas = evento.getNumeroVagasPreechidas();
         this.cargaHoraria = evento.getCargaHoraria();
+        this.vagasRestantes = evento.getVagasTotais() - evento.getNumeroVagasPreechidas();
         this.status = evento.getStatus();
     }
 
@@ -102,5 +104,13 @@ public class EventoDto {
 
     public void setNumeroVagasPreenchidas(Long numeroVagasPreenchidas) {
         this.numeroVagasPreenchidas = numeroVagasPreenchidas;
+    }
+
+    public Long getVagasRestantes() {
+        return vagasRestantes;
+    }
+
+    public void setVagasRestantes(Long vagasRestantes) {
+        this.vagasRestantes = vagasRestantes;
     }
 }

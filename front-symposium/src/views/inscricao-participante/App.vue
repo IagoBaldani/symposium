@@ -14,7 +14,7 @@
         <div class="col-lg-4">
           <div class="mt-5">
             <label class="form-label mb-0">Nome do evento</label>
-            <input class="form-control" type="text" :value="evento.nome" disabled>
+            <input class="form-control" type="text" :value="evento.nomeEvento" disabled>
           </div>
           <div class="mt-3">
             <label class="form-label mb-0">Descrição</label>

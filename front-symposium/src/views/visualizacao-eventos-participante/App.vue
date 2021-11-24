@@ -33,7 +33,7 @@
               </thead>
               <tbody align="center">
                 <tr v-for="evento in eventos" :key="evento">
-                  <td class="campo ps-4">{{evento.nome}}</td>
+                  <td class="campo ps-4">{{evento.nomeEvento}}</td>
                   <td class="campo ps-4">{{ evento.descricao }}</td>
                   <td class="campo ps-4">{{ formataDataParaMostrar(evento.dataInicio) }}</td>
                   <td class="campo ps-4">{{ evento.vagasTotais }}</td>
