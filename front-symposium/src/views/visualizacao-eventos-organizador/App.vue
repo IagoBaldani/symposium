@@ -91,7 +91,10 @@ export default {
         })
       },
       listaParticipantes () {
-        window.location.href = '/lista-participantes-inscritos-organizador'
+        const dadosUrl = Funcoes.pegaDadosUrl();
+        let id = dadosUrl.id
+
+        window.location.href = '/lista-participantes-inscritos-organizador?id=' + id
       }
     }
 }

@@ -6,14 +6,11 @@ import br.com.fatecourinhos.symposium.repository.EventoRepository;
 import br.com.fatecourinhos.symposium.vo.dto.EventoDto;
 import br.com.fatecourinhos.symposium.vo.form.AtualizaEventoForm;
 import br.com.fatecourinhos.symposium.vo.form.EventoForm;
-import br.com.fatecourinhos.symposium.vo.form.ListaEventosDto;
+import br.com.fatecourinhos.symposium.vo.dto.ListaEventosDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
-import java.net.URI;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -52,18 +49,20 @@ public class EventoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<EventoDto> criaEvento(@RequestBody EventoForm form, UriComponentsBuilder uriBuilder){
-        Evento evento = form.converte();
-        repository.save(evento);
+    public ResponseEntity criaEvento(@RequestBody EventoForm form) {
+        try {
+            Evento evento = form.converte();
+            repository.save(evento);
 
-        URI uri = uriBuilder.path("/api/evento/{id}").buildAndExpand(evento.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new EventoDto(evento));
+            return ResponseEntity.ok().body("Cadastro de evento concluído com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e);
+        }
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<EventoDto> atualizaEnvento(@PathVariable Long id ,@RequestBody AtualizaEventoForm form){
+    public ResponseEntity<EventoDto> atualizaEvento(@PathVariable Long id,@RequestBody AtualizaEventoForm form){
         Optional<Evento> optional = repository.findById(id);
 
         if(optional.isPresent()){
@@ -76,7 +75,7 @@ public class EventoController {
     }
 
     @PutMapping("/altera-situacao/{id}")
-    public ResponseEntity finalizaEvento (@PathVariable Long id){
+    public ResponseEntity alteraSItuacao (@PathVariable Long id){
         Optional<Evento> optional = repository.findById(id);
         if(optional.isPresent()){
             Evento evento = optional.get();
@@ -92,5 +91,23 @@ public class EventoController {
         }
 
         return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/deletar-evento/{id}")
+    @Transactional
+    public ResponseEntity terminarEvento(@PathVariable Long id){
+        Optional<Evento> optional = repository.findById(id);
+
+        if(optional.isPresent()){
+            Evento evento = optional.get();
+            if (evento.getNumeroVagasPreechidas() == 0) {
+                repository.deleteById(id);
+                return ResponseEntity.ok().body("Evento excluído com sucesso!");
+            } else{
+                return ResponseEntity.badRequest().body("O evento possui inscritos!");
+            }
+        }
+
+        return ResponseEntity.badRequest().body("Não há nenhum evento com o ID informado!");
     }
 }

@@ -84,7 +84,7 @@ public class AtualizaEventoForm {
         evento.setDataIni(this.dataInicio);
         evento.setDataFim(this.dataFinal);
         evento.setCargaHoraria(this.cargaHoraria);
-        evento.setStatus(this.status);
+        evento.setStatus("EM_ANDAMENTO");
 
         return evento;
     }

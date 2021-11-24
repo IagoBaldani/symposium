@@ -24,7 +24,7 @@
             <input class="form-control" type="text" v-model="organizador.cpf" disabled>
           </div>
           <div class="mt-5">
-            <a href="http://localhost:8080/edicao-organizadorn"><button class="btn btn-confirmar">EDITAR DADOS</button></a>
+            <a href="http://localhost:8080/edicao-organizador"><button class="btn btn-confirmar">EDITAR DADOS</button></a>
           </div>
         </div>
         <div class="col-lg-7"></div>

@@ -1,4 +1,4 @@
-package br.com.fatecourinhos.symposium.vo.form;
+package br.com.fatecourinhos.symposium.vo.dto;
 
 import br.com.fatecourinhos.symposium.modelo.Evento;
 
@@ -14,6 +14,7 @@ public class ListaEventosDto {
     private LocalDate dataInicio;
     private Long cargaHoraria;
     private Long vagasTotais;
+    private Long vagasRestantes;
     private Long vagasPreenchidas;
 
     public ListaEventosDto (Evento evento){
@@ -23,6 +24,7 @@ public class ListaEventosDto {
         this.dataInicio = evento.getDataIni();
         this.cargaHoraria = evento.getCargaHoraria();
         this.vagasTotais = evento.getVagasTotais();
+        this.vagasRestantes = evento.getVagasTotais() - evento.getNumeroVagasPreechidas();
         this.vagasPreenchidas = evento.getNumeroVagasPreechidas();
     }
 
@@ -76,6 +78,14 @@ public class ListaEventosDto {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getVagasRestantes() {
+        return vagasRestantes;
+    }
+
+    public void setVagasRestantes(Long vagasRestantes) {
+        this.vagasRestantes = vagasRestantes;
     }
 
     public void setId(Long id) {

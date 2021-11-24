@@ -2,16 +2,22 @@ package br.com.fatecourinhos.symposium.controller;
 
 import br.com.fatecourinhos.symposium.modelo.Evento;
 import br.com.fatecourinhos.symposium.modelo.ListaEventoParticipante;
+import br.com.fatecourinhos.symposium.modelo.Participante;
 import br.com.fatecourinhos.symposium.repository.EventoRepository;
 import br.com.fatecourinhos.symposium.repository.ListaEventoParticipanteRepository;
 import br.com.fatecourinhos.symposium.repository.ParticipanteRepository;
 import br.com.fatecourinhos.symposium.vo.dto.ListaDeCertificadosDto;
+import br.com.fatecourinhos.symposium.vo.dto.ListaDeParticipantesDto;
+import br.com.fatecourinhos.symposium.vo.dto.ListaDeParticipantesInscritosDto;
 import br.com.fatecourinhos.symposium.vo.form.InscricaoForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.transaction.Transactional;
+import javax.validation.ReportAsSingleViolation;
+import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +48,13 @@ public class ListaEventoParticipanteController {
         ListaEventoParticipante listaEventoParticipante = repository.getById(idInscricao);
 
         return new ListaDeCertificadosDto(listaEventoParticipante);
+    }
+
+    @GetMapping("/lista-inscritos/{idEvento}")
+    public List<ListaDeParticipantesInscritosDto> getListaDeParticipantesInscritosEmEvento (@PathVariable Long idEvento){
+        List<ListaEventoParticipante> listaEventoParticipante = repository.findParticipantesInscritos(idEvento);
+
+        return ListaDeParticipantesInscritosDto.toList(listaEventoParticipante);
     }
 
     @PostMapping("/gera-inscricao")
@@ -89,5 +102,29 @@ public class ListaEventoParticipanteController {
 
         repository.delete(listaEventoParticipante);
         return ResponseEntity.ok().body("Desinscrição feita com sucesso!");
+    }
+
+    @PostMapping("/altera-status/{id}")
+    @Transactional
+    public ResponseEntity alterarStatus(@PathVariable Long id){
+        ListaEventoParticipante listaEventoParticipante = repository.getById(id);
+
+        listaEventoParticipante.setSituacao("INSCRICAO_CONCLUIDA");
+        repository.save(listaEventoParticipante);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/excluir-inscricao/{id}")
+    @Transactional
+    public ResponseEntity deletaInscricao(@PathVariable Long id){
+        Optional<ListaEventoParticipante> optional = repository.findById(id);
+
+        if(optional.isPresent()){
+            repository.deleteById(id);
+            return ResponseEntity.ok().body("Inscricao excluída com sucesso!");
+        }
+
+        return ResponseEntity.badRequest().body("Não há nenhuma inscricao com o ID informado!");
     }
 }

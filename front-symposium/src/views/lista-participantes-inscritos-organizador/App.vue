@@ -6,7 +6,7 @@
         <div class="col-lg-1"></div>
         <div class="col-lg-10">
           <span class="titulo">Lista de participantes inscritos:
-            <span class="green ms-3"> SIADS </span>
+            <span class="green ms-3"> {{ nomeEvento.nome }} </span>
           </span>
 
         </div>
@@ -23,62 +23,13 @@
           <div class="table-wrapper-scroll-y my-custom-scrollbar">
             <table>
               <tbody>
-              <tr>
-                <td class="tamanho-certificado ps-4"> 0210481913025 - Iago Baldani</td>
-                <td class="tamanho-situacao ps-4 green"> Inscrição Completa </td>
-                <td class="td-download text-center" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="download" src="../../assets/imgs/settings_white_24dp.svg"></td>
-              </tr>
-              <tr>
-                <td class="tamanho-certificado ps-4"> 0210481913025 - Gustavo Boiola</td>
-                <td class="tamanho-situacao ps-4 red"> Pagamento Pendente </td>
-                <td class="td-download text-center" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="download" src="../../assets/imgs/settings_white_24dp.svg"></td>
+              <tr v-for="participante in listaInscritos" :key="participante">
+                <td class="tamanho-certificado ps-4"> {{ participante.ra +' - '+ participante.nome }}</td>
+                <td class="tamanho-situacao ps-4 green"> {{ participante.status }} </td>
+                <td class="td-download text-center" data-bs-toggle="modal" data-bs-target="#exampleModal"><img class="download" src="../../assets/imgs/settings_white_24dp.svg" @click="alteraSituacao(participante.idDaInscricao)"></td>
               </tr>
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-xl modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header border-0">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body d-flex justify-content-between">
-            <div>
-              <h1 class="modal-title form-label fw-bold mb-0 titulo">
-                Deseja mesmo alterar o status de inscrição do participante?
-              </h1>
-              <span> Nome do participante </span>
-            </div>
-            <div class="conteudomodal">
-              <h2 class="fw-bold subtitulo">
-                <span class="red"> Pagamento Pendente </span> para <span class="green"> Inscrição completa </span>
-              </h2>
-            </div>
-          </div>
-          <div class="modal-footer border-0 justify-content-around">
-            <div>
-              <button type="button" class="btn submit-modal">CONFIRMAR</button>
-            </div>
-            <div>
-              <button type="button" class="btn cancel-modal" data-bs-dismiss="modal">
-                CANCELAR
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -90,6 +41,7 @@
 <script>
 import Header from '../../components/Header.vue'
 import Funcoes from "@/services/Funcoes";
+import { http } from '@/services/Config'
 
 export default {
     name: 'App',
@@ -98,16 +50,59 @@ export default {
     },
     data(){
       return{
-
+        nomeEvento: {},
+        listaInscritos: {}
       }
     },
     beforeMount() {
       const dadosUrl = Funcoes.pegaDadosUrl();
 
       Funcoes.verificaTipoUsuario()
+
+      this.getLista();
     },
     methods:{
+      getLista () {
+        const dadosUrl = Funcoes.pegaDadosUrl();
+        let id = dadosUrl.id
 
+        http
+          .get(`lista-evento-participante/lista-inscritos/${id}`)
+          .then(response => {
+            this.listaInscritos = response.data
+          })
+          .catch(error => {
+            alert(error)
+          })
+
+        http
+          .get(`evento/${id}`)
+          .then(response => {
+            this.nomeEvento = response.data
+          })
+          .catch(error => {
+            alert(error)
+          })
+      },
+
+      alteraSituacao (id) {
+        http
+          .post(`lista-evento-participante/altera-status/${id}`)
+          .then(window.location.reload())
+      },
+
+      async deletaInscricao (id){
+        let result = confirm("Deseja retirar o participante deste evento?")
+
+        if (result === true) {
+          await http
+            .post(`lista-evento-participante/excluir-inscricao/${id}`)
+            .then(window.location.reload())
+            .catch(error => {
+              alert(error)
+            })
+        }
+      }
     }
 }
 </script>
