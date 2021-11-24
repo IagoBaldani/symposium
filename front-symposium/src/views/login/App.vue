@@ -52,11 +52,11 @@ export default {
     Cookie.remove('tipo')
   },
   methods:{
-    login () {
+    async login () {
       this.loginForm.email = document.querySelector('#email').value
       this.loginForm.senha = document.querySelector('#senha').value
 
-      http
+      await http
         .post('login', this.loginForm)
         .then(response => {
           this.geraCookie = response.data

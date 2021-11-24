@@ -21,7 +21,7 @@
         <div class="col-lg-10">
           <div class="table-responsive">
             <table class="table">
-              <thead>
+              <thead align="center">
                 <tr>
                   <td class="titulo-campo"> Nome </td>
                   <td class="titulo-campo"> Descrição </td>
