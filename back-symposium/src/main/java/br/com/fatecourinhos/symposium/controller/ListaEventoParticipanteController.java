@@ -38,6 +38,7 @@ public class ListaEventoParticipanteController {
     @PostMapping("/gera-inscricao")
     public ResponseEntity geraInscricaoNoEvento (@RequestBody InscricaoForm form){
 
+        // Colocar lógica de alteração no número de participantes no evento
         ListaEventoParticipante lista = form.converte(eventoRepository, participanteRepository);
         repository.save(lista);
 

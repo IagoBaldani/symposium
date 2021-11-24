@@ -14,7 +14,6 @@ public class InscricaoForm {
     public Long getIdParticipante() {
         return idParticipante;
     }
-
     public void setIdParticipante(Long idParticipante) {
         this.idParticipante = idParticipante;
     }
@@ -22,7 +21,6 @@ public class InscricaoForm {
     public Long getIdEvento() {
         return idEvento;
     }
-
     public void setIdEvento(Long idEvento) {
         this.idEvento = idEvento;
     }
@@ -30,7 +28,6 @@ public class InscricaoForm {
     public String getSituacao() {
         return situacao;
     }
-
     public void setSituacao(String situacao) {
         situacao = situacao;
     }
